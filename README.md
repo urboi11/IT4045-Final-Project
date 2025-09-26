@@ -112,7 +112,7 @@ IUserCommentData: interface for interacting with the database, specifically the 
 - deleteUserComment(): deletes a comment based on ID from database
 
 ### Architecture and Components of Application
-~[Architecture and Components](/media/architecture.png)
+![Architecture and Components](/media/architecture.png)
 
 ### Roles
 - Jason Welsh
