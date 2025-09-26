@@ -7,11 +7,11 @@
 - Ethan Goudy
 
 ### Project Overview:
-University students want to go into new experiences feeling prepared. Currently, there is not an easily accessible way fo college students to view ratings for a course. Rate My Professor allows students to see what prior students have said about the course, such as technologies used, example syllabi, how other students thought it related to their majors, etc. As such, we want to develop RateMyCourse to give students an easy way to collect infomration about their courses prior to thei semester starting. 
+University students want to go into new experiences feeling prepared. Currently, there is not an easily accessible way for college students to view ratings for a course. Rate My Professor allows students to see what prior students have said about the course, such as technologies used, example syllabi, how other students thought it related to their majors, etc. As such, we want to develop RateMyCourse to give students an easy way to collect infomration about their courses prior to their semester starting. 
 
 ### Goals and Objectives
 - To allow students to provide ratings and feedback for courses.
-- To provide a searchable catalog of unviersity courses base on course ID.
+- To provide a searchable catalog of unviersity courses based on course ID.
 - To enable students to see comments from previous students about a course.
 
 ### Functional Requirements
@@ -51,10 +51,11 @@ University students want to go into new experiences feeling prepared. Currently,
 4. If the course number searched doesn't return any results, this is what the user will see.
 ![No Course Found](media/noCourseFound.png)
 
-5. The admin user can then go intot he admin profile page to craeate a crouse that doesn't exist yet. The admin panel also has other details like courses registered and users registered.
+5. The admin user can then go into the admin profile page to create a course that doesn't exist yet. The admin panel also has other details like courses registered and users registered.
 ![Admin Panel](media/adminPanel.png)
 
 6. The user can also click into their profile to see their details and any comments they've made previously, as well as deleting those comments. 
+![User Profile Interaction](media/userProfileInteraction.png)
 
 ### Class Diagram
 ![Class Diagram](media/classDiagram.png)
