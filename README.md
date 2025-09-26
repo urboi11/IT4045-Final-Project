@@ -53,3 +53,76 @@ University students want to go into new experiences feeling prepared. Currently,
 
 5. The admin user can then go intot he admin profile page to craeate a crouse that doesn't exist yet. The admin panel also has other details like courses registered and users registered.
 ![Admin Panel](media/adminPanel.png)
+
+6. The user can also click into their profile to see their details and any comments they've made previously, as well as deleting those comments. 
+
+### Class Diagram
+![Class Diagram](media/classDiagram.png)
+
+
+#### com.it4045.finalproject.controllers
+WebController: handles the webpages
+UserController: endpoint for interacting with courses
+CourseController: endpoint for interacting with users
+
+#### com.it4045.finalproject.entities
+All entities will use Lombok for getters and setters and other boilerplate methods so they have been excluded from the diagram and description.
+User: stores information for the users. isAdmin is a Boolean field which can be set to define a user as an admin and has access to the admin settings page.
+Course: stores information for the courses
+UserComments: acts as a crossreference table for User and Course.
+
+#### com.it4045.finalproject.services
+UserService: implements IUserService
+IUserService: interface for user logic. All methods are signature only as is the case for interfaces. Implemented by UserService:
+- createUser(): creating a user on signup
+- getUserName(): getting the user name
+- getUsers(): getting a list of users (for the admin page)
+- getCommentsForUser(): getting all the comments a user has made (for the profile page)
+
+CourseService: implements ICourseService
+ICourseService: interface for course logic. All methods are signature only as is the case for interfaces. 
+Implemented by CourseService.
+- createCourse(): creating a course
+- searchCourse(): gets a course based on the course ID
+- commentOnCourse(): creates a comment based on user input
+- deleteComment(): deletes a comment
+- getCommentsForCourse(): gets a list of all the comments associated with a course
+- getRating(): gets the rating for a given course
+- calculateRating(): calculates the new rating based on user input for rating
+
+#### com.it4045.finalproject.data
+UserData: implements IUserData
+IUserData: interface for interacting with the database, specifically the user table. All methods are signature only as is the case for interfaces.
+- createUser(): creates a user in the database
+- getUser(): queries the database for a specific user
+- getUsers(): gets all the users from the database
+
+CourseData: implements ICourseData
+ICourseData: interface for interacting with the database, specifically the course table. All methods are signature only as is the case for interfaces.
+- createCourse(): creates a course in the database
+- getCourses(): gets a list of all the courses
+- getCourse(): gets a specific course based on ID
+- updateRating(): updates the rating in the database
+
+UserCommentData: implements IUserCommentData
+IUserCommentData: interface for interacting with the database, specifically the usercomment table. All methods are signature only as is the case for interfaces.
+- getUserComments(): gets a list of comments for a specific user from database
+- getCourseComments(): gets a list of comments for a specific course from database
+- deleteUserComment(): deletes a comment based on ID from database
+
+### Architecture and Components of Application
+~[Architecture and Components](/media/architecture.png)
+
+### Roles
+- Jason Welsh
+    - Scrum Master and Backend Developer
+- Sage Bushstone
+    - Product Owner and Backend Developer
+- Ella Seibert
+    - DevOps - FrontEnd Developer
+- Ethan Goudy
+    - DevOps - BackEnd Developer
+
+### Github Project and Repo Link
+- [Github Project](https://github.com/users/urboi11/projects/4)
+- [Github Repo](https://github.com/urboi11/IT4045-Final-Project)
