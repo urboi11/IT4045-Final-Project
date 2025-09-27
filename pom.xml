@@ -98,9 +98,9 @@
                 	<groupId>org.flywaydb</groupId>
                 	<artifactId>flyway-maven-plugin</artifactId>
                 	<configuration>
-                    	<url>{$SECRET_REPO_URL}</url>
-						<user>{$SECRET_REPO_USER}</user>
-						<password>{$SECRET_REPO_PASSWORD}</password>
+                    	<url>{$secret_url}</url>
+						<user>{$secret_username}</user>
+						<password>{$secret_password}</password>
 						<baselineOnMigrate>true</baselineOnMigrate>
                 	</configuration>
 				</plugin>
