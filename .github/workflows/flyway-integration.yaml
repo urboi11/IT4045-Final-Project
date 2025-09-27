@@ -19,6 +19,7 @@ jobs:
           uses: actions/setup-java@v4
           with:
             java-version: '17'
+            distribution: 'temurin'
 
         - name: Build with Maven
           run: mvn flyway:migrate -Dsecret_url=${{secrets.SECRET_REPO_URL}} -Dsecret_username=${{secrets.SECRET_REPO_USERNAME}} -Dsecret_password=${{secrets.SECRET_REPO_PASSWORD}}        
