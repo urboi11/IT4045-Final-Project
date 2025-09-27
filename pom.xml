@@ -98,7 +98,9 @@
                 	<groupId>org.flywaydb</groupId>
                 	<artifactId>flyway-maven-plugin</artifactId>
                 	<configuration>
-                    	<url>jdbc:mysql://localhost:3306/finalprojectdatabase</url>
+                    	<url>{$SECRET_REPO_URL}</url>
+						<user>{$SECRET_REPO_USER}</user>
+						<password>{$SECRET_REPO_PASSWORD}</password>
 						<baselineOnMigrate>true</baselineOnMigrate>
                 	</configuration>
 				</plugin>
