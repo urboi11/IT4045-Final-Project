@@ -59,7 +59,7 @@ University students want to go into new experiences feeling prepared. Currently,
 
 ### Class Diagram
 ![Class Diagram](media/classDiagram.png)
-
+[Link to original LucidChart Class Diagram](https://lucid.app/lucidchart/da452509-1147-4ec6-976c-e8bc58310a99/edit?viewport_loc=-198%2C-652%2C5115%2C2260%2C0_0&invitationId=inv_c39cdfe5-c0b1-4025-80d1-99e03c792445)
 
 #### com.it4045.finalproject.controllers
 WebController: handles the webpages
