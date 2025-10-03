@@ -4,10 +4,11 @@ import java.util.List;
 
 import com.it4045.finalproject.data.UserCommentsDTO;
 import com.it4045.finalproject.data.UserDTO;
+import com.it4045.finalproject.entities.User;
 
 public interface IUserService {
     
-    public UserDTO createUser(String userFirstName, String userLastName, String userEmail, String userPass, boolean isAdmin);
+    public UserDTO createUser(User user);
 
     public String getUserName(int userId);
 

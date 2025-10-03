@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class UserCommentsDTO {
 
-    private String Comment;
+    private String comment;
 }

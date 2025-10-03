@@ -7,7 +7,7 @@ import com.it4045.finalproject.entities.User;
 
 public class UserMapper {
   
-    public static UserDTO DTOConverter(User user) {
+    public UserDTO DTOConverter(User user) {
         UserDTO userDTO = new UserDTO();
 
         userDTO.setUserFirstName(user.getUserFirstName());

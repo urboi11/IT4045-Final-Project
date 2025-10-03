@@ -18,6 +18,8 @@ public class UserComments {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userCommentId;
 
+
+    //TODO: I think a OneToMany annotation needs to be here for the reference to the User class?
     private int userId;
     private int courseId;
     private String comment;
