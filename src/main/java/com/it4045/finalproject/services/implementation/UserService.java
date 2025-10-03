@@ -54,9 +54,9 @@ public class UserService implements IUserService{
     }
 
     //TODO: Work on this one. 
-    @Override
-    public List<UserCommentsDTO> getCommentsForUser(UserDTO user) {
+    // @Override
+    // public List<UserCommentsDTO> getCommentsForUser(UserDTO user) {
         
-    }
+    // }
     
 }
