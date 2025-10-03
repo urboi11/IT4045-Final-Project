@@ -1,4 +1,4 @@
-package entities;
+package com.it4045.finalproject.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,20 +7,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="users")
+@Table(name="usercomments")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class User {
+public class UserComments {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userCommentId;
+
     private int userId;
-
-    private String userFirstName;
-    private String userLastName;
-    private String userEmail;
-    private String userPass;
-    private boolean isAdmin;
-
+    private int courseId;
+    private String comment;
 }

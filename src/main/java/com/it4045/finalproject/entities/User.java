@@ -1,4 +1,4 @@
-package entities;
+package com.it4045.finalproject.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,19 +7,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="courses")
+@Table(name="users")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class Course {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int courseId;
+    private int userId;
 
-    private String courseNumber;
-    private String courseName;
-    private double courseRating;
-    private String university;
-    private String description;
+    private String userFirstName;
+    private String userLastName;
+    private String userEmail;
+    private String userPass;
+    private boolean isAdmin;
+
 }
