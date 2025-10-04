@@ -19,8 +19,13 @@ public class UserComments {
     private Integer userCommentId;
 
 
-    //TODO: I think a OneToMany annotation needs to be here for the reference to the User class?
-    private int userId;
-    private int courseId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="userid")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="courseId")
+    private Course course;
+
     private String comment;
 }

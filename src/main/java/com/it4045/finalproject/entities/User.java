@@ -18,9 +18,13 @@ public class User {
     private Integer userId;
 
     private String userFirstName;
+
     private String userLastName;
+
     private String userEmail;
+
     private String userPass;
+
     private boolean isAdmin;
 
 }

@@ -18,8 +18,12 @@ public class Course {
     private Integer courseId;
 
     private String courseNumber;
+
     private String courseName;
+
     private double courseRating;
+
     private String university;
+
     private String description;
 }
