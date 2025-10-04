@@ -94,16 +94,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-				<plugin>
-                	<groupId>org.flywaydb</groupId>
-                	<artifactId>flyway-maven-plugin</artifactId>
-                	<configuration>
-                    	<url>${secret_url}</url>
-						<user>${secret_username}</user>
-						<password>${secret_password}</password>
-						<baselineOnMigrate>true</baselineOnMigrate>
-                	</configuration>
-				</plugin>
 		</plugins>
 	</build>
 

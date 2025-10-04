@@ -16,7 +16,7 @@ public class UserComments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userCommentId;
+    private Integer userCommentId;
 
 
     //TODO: I think a OneToMany annotation needs to be here for the reference to the User class?

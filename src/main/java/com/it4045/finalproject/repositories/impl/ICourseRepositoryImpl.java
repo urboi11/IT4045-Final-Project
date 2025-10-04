@@ -1,44 +1,42 @@
-package com.it4045.finalproject.repositories.impl;
+// package com.it4045.finalproject.repositories.impl;
 
-import com.it4045.finalproject.repositories.ICourseRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import com.it4045.finalproject.entities.Course;
-import com.it4045.finalproject.repositories.CourseRepository;
+// import com.it4045.finalproject.repositories.ICourseRepository;
+// import java.util.ArrayList;
+// import java.util.List;
+// import java.util.Optional;
+// import com.it4045.finalproject.entities.Course;
 
 
-public class ICourseRepositoryImpl implements ICourseRepository{
+// //TODO: Need to figure out how to implement the repository to access the database details for CRUD operations.
+// public class ICourseRepositoryImpl implements ICourseRepository{
 
-    CourseRepository courseRepository;
+//     // CourseRepository courseRepository;
 
-    ICourseRepositoryImpl(CourseRepository courseRepository){
-        this.courseRepository = courseRepository;    
-    }
-    @Override
-    public void updateRating(int courseId, double rating) {
+//     // ICourseRepositoryImpl(CourseRepository courseRepository){
+//     //     this.courseRepository = courseRepository;    
+//     // }
+//     @Override
+//     public void updateRating(int courseId, double rating) {
         
-        Optional<Course> courseReturned = courseRepository.findById(courseId);
+//         // Optional<Course> courseReturned = courseRepository.findById(courseId);
 
-        courseReturned.ifPresent(course -> {
-            course.setCourseRating(rating);
-            courseRepository.save(course);
-        });
+//         // courseReturned.ifPresent(course -> {
+//         //     course.setCourseRating(rating);
+//         //     courseRepository.save(course);
+//         // });
 
-    }
-    @Override
-    public List<Course> getCourses(int courseId) {
-        List<Course> courseList = new ArrayList();
+//     }
+//     @Override
+//     public List<Course> getCourses(int courseId) {
+//         List<Course> courseList = new ArrayList();
 
-        var courses = courseRepository.findById(courseId);
+//         // var courses = courseRepository.findById(courseId);
     
-        courses.ifPresent(course -> {
-            courseList.add(course);            
-        });
+//         // courses.ifPresent(course -> {
+//         //     courseList.add(course);            
+//         // });
         
-        return courseList;
-    }
+//         return courseList;
+//     }
     
-}
+// }
