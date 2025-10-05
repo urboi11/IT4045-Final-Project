@@ -11,7 +11,7 @@ University students want to go into new experiences feeling prepared. Currently,
 
 ### Goals and Objectives
 - To allow students to provide ratings and feedback for courses.
-- To provide a searchable catalog of unviersity courses based on course ID.
+- To provide a searchable catalog of university courses based on course ID.
 - To enable students to see comments from previous students about a course.
 
 ### Functional Requirements
