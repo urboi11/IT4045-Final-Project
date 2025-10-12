@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @NoRepositoryBean
 @Repository
-public interface UserCommentRepository extends JpaRepository<UserComments, Integer>, IUserCommentRepository {
+public interface UserCommentRepository extends JpaRepository<UserComments, Integer>{
     
 }
 
