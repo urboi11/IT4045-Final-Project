@@ -21,7 +21,13 @@ private final UserRepository userRepository;
 private final UserCommentRepository userCommentRepository;
 private final EntityManager entityManager;
 
-
+@Transactional
+public Course createCourse(String FirstName, String LastName, String Email, String Password, Boolean IsAdmin){
+    Course course = new Course();
+    course.setCourseName(FirstName);
+    course.se
+    courseRepository.save(course);
+}
 
 
 }
