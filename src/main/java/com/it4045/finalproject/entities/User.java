@@ -30,7 +30,7 @@ public class User {
 
     private boolean isAdmin;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<UserComments> userComments = new ArrayList<>();
 

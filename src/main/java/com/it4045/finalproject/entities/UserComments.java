@@ -15,7 +15,6 @@ public class UserComments {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userCommentId;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userid")
     @ToString.Exclude
