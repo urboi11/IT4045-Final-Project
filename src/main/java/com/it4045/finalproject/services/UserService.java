@@ -1,5 +1,5 @@
 package com.it4045.finalproject.services;
 
-public class UserService implements ICourseService{
+public class  UserService implements ICourseService{
 
 }
