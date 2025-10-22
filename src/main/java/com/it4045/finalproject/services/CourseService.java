@@ -26,22 +26,27 @@ private final EntityManager entityManager;
 
     @Override
     public Course createCourse(Course course) {
-        return null;
+        courseRepository.save(course);
+        return course;
     }
 
     @Override
     public List<Course> searchCourses(int courseID) {
-        return List.of();
+       var resultCourse = courseRepository.findById(courseID);
+       var resultList = resultCourse.stream().toList();
+        return resultList;
     }
 
     @Override
     public void commentOnCourse(String comment, Course course) {
-
+       int targetCourseID = course.getCourseId();
+       userCommentRepository.
     }
 
     @Override
     public List<UserComments> deleteComment(int userCommentId) {
-        return List.of();
+        userCommentRepository.deleteById(userCommentId);
+        return userCommentRepository.findAll();
     }
 
     @Override
