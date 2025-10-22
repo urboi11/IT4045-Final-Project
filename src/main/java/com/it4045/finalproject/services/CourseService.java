@@ -38,19 +38,24 @@ private final EntityManager entityManager;
     }
 
     @Override
-    public void commentOnCourse(String comment, Course course) {
+    public void commentOnCourse(String comment, User user, Course course) {
        int targetCourseID = course.getCourseId();
-       userCommentRepository.
+         Course targetCourse = entityManager.find(Course.class, targetCourseID);
+         UserComments commentToAdd = new UserComments(0, user, targetCourse, comment);
+         targetCourse.addComment(commentToAdd);
+         userCommentRepository.save(commentToAdd);
+        courseRepository.save(targetCourse);
     }
 
     @Override
-    public List<UserComments> deleteComment(int userCommentId) {
+    public void deleteComment(int userCommentId) {
         userCommentRepository.deleteById(userCommentId);
-        return userCommentRepository.findAll();
     }
 
     @Override
     public void getCommentsForCourse(Course course) {
+        int targetCourseID =course.getCourseId();
+
 
     }
 

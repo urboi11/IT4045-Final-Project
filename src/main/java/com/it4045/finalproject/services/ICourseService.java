@@ -12,9 +12,9 @@ public interface ICourseService {
 
  public void commentOnCourse (String comment, Course course);
 
- public List<UserComments> deleteComment(int userCommentId);
+ public void deleteComment(int userCommentId);
 
-public void getCommentsForCourse(Course course);
+public List<UserComments> getCommentsForCourse(Course course);
 
 public int getRating (Course course);
 
