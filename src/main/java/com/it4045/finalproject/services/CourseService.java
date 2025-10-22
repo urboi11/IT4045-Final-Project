@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Service
 public class CourseService implements ICourseService{
@@ -21,13 +23,42 @@ private final UserRepository userRepository;
 private final UserCommentRepository userCommentRepository;
 private final EntityManager entityManager;
 
-@Transactional
-public Course createCourse(String FirstName, String LastName, String Email, String Password, Boolean IsAdmin){
-    Course course = new Course();
-    course.setCourseName(FirstName);
-    course.se
-    courseRepository.save(course);
+
+    @Override
+    public Course createCourse(Course course) {
+        return null;
+    }
+
+    @Override
+    public List<Course> searchCourses(int courseID) {
+        return List.of();
+    }
+
+    @Override
+    public void commentOnCourse(String comment, Course course) {
+
+    }
+
+    @Override
+    public List<UserComments> deleteComment(int userCommentId) {
+        return List.of();
+    }
+
+    @Override
+    public void getCommentsForCourse(Course course) {
+
+    }
+
+    @Override
+    public int getRating(Course course) {
+        return 0;
+    }
+
+    @Override
+    public void calculateRating(Course course, int rating) {
+
+    }
 }
 
 
-}
+
