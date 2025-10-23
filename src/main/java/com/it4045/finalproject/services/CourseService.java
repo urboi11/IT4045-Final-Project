@@ -1,7 +1,5 @@
 package com.it4045.finalproject.services;
 
-import com.it4045.finalproject.services.IUserService;
-import com.it4045.finalproject.services.ICourseService;
 import com.it4045.finalproject.entities.Course;
 import com.it4045.finalproject.entities.User;
 import com.it4045.finalproject.entities.UserComments;
@@ -10,10 +8,11 @@ import com.it4045.finalproject.repository.UserRepository;
 import com.it4045.finalproject.repository.UserCommentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import jakarta.transaction.Transactional;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
+
+import static java.lang.Math.round;
 
 @AllArgsConstructor
 @Service
@@ -37,6 +36,8 @@ private final EntityManager entityManager;
         return resultList;
     }
 
+
+
     @Override
     public void commentOnCourse(String comment, User user, Course course) {
        int targetCourseID = course.getCourseId();
@@ -53,15 +54,17 @@ private final EntityManager entityManager;
     }
 
     @Override
-    public void getCommentsForCourse(Course course) {
+    public List<UserComments> getCommentsForCourse(Course course) {
         int targetCourseID =course.getCourseId();
-
+        List<UserComments> commentsList = entityManager.find(UserComments.class, course).getCourse().getUserComments();
+        return commentsList;
 
     }
 
     @Override
     public int getRating(Course course) {
-        return 0;
+        double rating = course.getCourseRating();
+        return (int) round(rating);
     }
 
     @Override
