@@ -69,7 +69,7 @@ private final EntityManager entityManager;
 
     @Override
     public void calculateRating(Course course, int rating) {
-
+        course.setCourseRating(rating);
     }
 }
 
