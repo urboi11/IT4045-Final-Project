@@ -1,10 +1,7 @@
 package com.it4045.finalproject.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name="usercomments")
@@ -18,13 +15,14 @@ public class UserComments {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userCommentId;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userid")
+    @ToString.Exclude
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="courseId")
+    @ToString.Exclude
     private Course course;
 
     private String comment;
