@@ -7,6 +7,8 @@ import com.it4045.finalproject.repository.CourseRepository;
 import com.it4045.finalproject.repository.UserRepository;
 import com.it4045.finalproject.repository.UserCommentRepository;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
 
@@ -15,6 +17,7 @@ import java.util.List;
 import static java.lang.Math.round;
 
 @AllArgsConstructor
+@Data
 @Service
 public class CourseService implements ICourseService{
 private final CourseRepository courseRepository;
