@@ -26,4 +26,13 @@ public class Course {
     private String university;
 
     private String description;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<UserComments> userComments = new ArrayList<>();
+
+    public void addComment(UserComments comment){
+        userComments.add(comment);
+        comment.setCourse(this);
+    }
 }
