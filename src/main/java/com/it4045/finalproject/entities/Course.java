@@ -1,5 +1,7 @@
 package com.it4045.finalproject.entities;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
