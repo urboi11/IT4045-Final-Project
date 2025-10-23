@@ -1,6 +1,7 @@
 package com.it4045.finalproject.services;
 
 import com.it4045.finalproject.entities.Course;
+import com.it4045.finalproject.entities.User;
 import com.it4045.finalproject.entities.UserComments;
 
 import java.util.List;
@@ -10,11 +11,11 @@ public interface ICourseService {
 
  public List<Course> searchCourses (int courseID);
 
- public void commentOnCourse (String comment, Course course);
+ public void commentOnCourse (String comment, User user, Course course);
 
- public List<UserComments> deleteComment(int userCommentId);
+ public void deleteComment(int userCommentId);
 
-public void getCommentsForCourse(Course course);
+public List<UserComments> getCommentsForCourse(Course course);
 
 public int getRating (Course course);
 
