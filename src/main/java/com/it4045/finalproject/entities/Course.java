@@ -30,6 +30,8 @@ public class Course {
 
     private String description;
 
+    private int rating_count;
+
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<UserComments> userComments = new ArrayList<>();

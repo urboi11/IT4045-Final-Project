@@ -44,14 +44,21 @@ private final EntityManager entityManager;
          Course targetCourse = entityManager.find(Course.class, targetCourseID);
          UserComments commentToAdd = new UserComments(0, user, targetCourse, comment);
          targetCourse.addComment(commentToAdd);
+         targetCourse.setRating_count(targetCourse.getRating_count()+1);
          userCommentRepository.save(commentToAdd);
         courseRepository.save(targetCourse);
+
     }
 
     @Override
     public void deleteComment(int userCommentId) {
+        UserComments targetComment = entityManager.find(UserComments.class, userCommentId);
+        Course targetCourse = targetComment.getCourse();
         userCommentRepository.deleteById(userCommentId);
+        targetCourse.setRating_count(targetCourse.getRating_count()-1);
+
     }
+
 
     @Override
     public List<UserComments> getCommentsForCourse(Course course) {
@@ -69,7 +76,11 @@ private final EntityManager entityManager;
 
     @Override
     public void calculateRating(Course course, int rating) {
-        course.setCourseRating(rating);
+        double currentRating = course.getCourseRating();
+        int ratingCount = course.getRating_count();
+        double newRating = (currentRating + rating) / ratingCount;
+        course.setCourseRating(newRating);
+        courseRepository.save(course);
     }
 }
 
