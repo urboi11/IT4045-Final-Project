@@ -3,10 +3,12 @@ package com.it4045.finalproject.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.it4045.finalproject.entities.User;
 import com.it4045.finalproject.entities.UserComments;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserCommentRepository extends JpaRepository<UserComments, Integer>{
-    public List<UserComments> findByUser(Integer userId);
+    public List<UserComments> findByUser(User user);
 }
