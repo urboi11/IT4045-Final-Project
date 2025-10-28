@@ -39,7 +39,12 @@ public class  UserService implements IUserService{
 
     @Override
     public List<UserComments> getCommentsForUser(User user) {
-        return userCommentRepository.findByUser(user.getUserId());
+        return userCommentRepository.findByUser(user);
     }
 
+
+    // @Override 
+    // public List<UserComments> getCommentsForUser(User user) {
+    //     return null;
+    // }
 }
