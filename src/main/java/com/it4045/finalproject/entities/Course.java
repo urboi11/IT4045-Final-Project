@@ -1,5 +1,6 @@
 package com.it4045.finalproject.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -28,6 +29,8 @@ public class Course {
     private String university;
 
     private String description;
+
+    private int rating_count;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
