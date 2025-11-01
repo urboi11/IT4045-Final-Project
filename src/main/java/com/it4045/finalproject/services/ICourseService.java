@@ -9,7 +9,9 @@ import java.util.List;
 public interface ICourseService {
  public Course createCourse(Course course);
 
- public List<Course> searchCourses (int courseID);
+ public List<Course> getCourses();
+
+ public List<Course> searchCourses (String courseNum);
 
  public void commentOnCourse (String comment, User user, Course course);
 
