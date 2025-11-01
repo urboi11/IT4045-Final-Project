@@ -18,12 +18,16 @@ import lombok.NoArgsConstructor;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="course_id")
     private Integer courseId;
 
+    @Column(name="course_number")
     private String courseNumber;
 
+    @Column(name="course_name")
     private String courseName;
 
+    @Column(name="course_rating")
     private double courseRating;
 
     private String university;
