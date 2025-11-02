@@ -12,6 +12,7 @@ import lombok.Data;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.round;
@@ -32,24 +33,37 @@ private final EntityManager entityManager;
         return course;
     }
 
-    @Override
+    /*@Override
     public List<Course> searchCourses(int courseID) {
        var resultCourse = courseRepository.findById(courseID);
        var resultList = resultCourse.stream().toList();
         return resultList;
+    }*/
+
+    @Override
+    public List<Course> searchCourses(String courseNum) {
+        List<Course> allCourses = courseRepository.findAll();
+        return allCourses.stream().filter(c -> c.getCourseNumber().equals(courseNum)).toList();
+    }
+
+    @Override
+    public List<Course> getCourses() {
+        return courseRepository.findAll();
     }
 
 
 
     @Override
     public void commentOnCourse(String comment, User user, Course course) {
-       int targetCourseID = course.getCourseId();
-         Course targetCourse = entityManager.find(Course.class, targetCourseID);
-         UserComments commentToAdd = new UserComments(0, user, targetCourse, comment);
-         targetCourse.addComment(commentToAdd);
-         targetCourse.setRating_count(targetCourse.getRating_count()+1);
-         userCommentRepository.save(commentToAdd);
-        courseRepository.save(targetCourse);
+        //int targetCourseID = course.getCourseId();
+        //Course targetCourse = entityManager.find(Course.class, targetCourseID);
+        //UserComments commentToAdd = new UserComments(0, user, targetCourse, comment);
+        UserComments commentToAdd = UserComments.builder().user(user).course(course).comment(comment).build();
+
+        course.addComment(commentToAdd);
+        //targetCourse.setRating_count(targetCourse.getRating_count()+1);
+        //userCommentRepository.save(commentToAdd);
+        courseRepository.save(course);
 
     }
 
@@ -65,10 +79,10 @@ private final EntityManager entityManager;
 
     @Override
     public List<UserComments> getCommentsForCourse(Course course) {
-        int targetCourseID =course.getCourseId();
+        /*int targetCourseID =course.getCourseId();
         List<UserComments> commentsList = entityManager.find(UserComments.class, course).getCourse().getUserComments();
-        return commentsList;
-
+        return commentsList;*/
+        return course.getUserComments();
     }
 
     @Override
@@ -81,8 +95,13 @@ private final EntityManager entityManager;
     public void calculateRating(Course course, int rating) {
         double currentRating = course.getCourseRating();
         int ratingCount = course.getRating_count();
-        double newRating = (currentRating + rating) / ratingCount;
+        double newRating = rating;
+
+        if (currentRating != 0) {
+            newRating = ((currentRating * ratingCount) + rating) / (ratingCount + 1);
+        }
         course.setCourseRating(newRating);
+        course.setRating_count(ratingCount + 1); // increments rating_count since we get a new rating
         courseRepository.save(course);
     }
 }

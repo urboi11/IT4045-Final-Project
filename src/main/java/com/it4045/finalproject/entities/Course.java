@@ -18,12 +18,16 @@ import lombok.NoArgsConstructor;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="course_id")
     private Integer courseId;
 
+    @Column(name="course_number")
     private String courseNumber;
 
+    @Column(name="course_name")
     private String courseName;
 
+    @Column(name="course_rating")
     private double courseRating;
 
     private String university;
@@ -32,7 +36,7 @@ public class Course {
 
     private int rating_count;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @Builder.Default
     private List<UserComments> userComments = new ArrayList<>();
 

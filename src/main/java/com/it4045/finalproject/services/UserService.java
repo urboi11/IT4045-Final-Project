@@ -2,6 +2,7 @@ package com.it4045.finalproject.services;
 
 import java.util.List;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import com.it4045.finalproject.entities.UserComments;
 import com.it4045.finalproject.entities.User;
