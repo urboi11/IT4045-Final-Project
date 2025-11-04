@@ -13,6 +13,8 @@ public interface ICourseService {
 
  public List<Course> searchCourses (String courseNum);
 
+ public Course getCourseById(Integer id);
+
  public void commentOnCourse (String comment, User user, Course course);
 
  public void deleteComment(int userCommentId);

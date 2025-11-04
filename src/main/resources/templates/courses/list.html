@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>Search for a Course</h2>
+
+    <form th:action="@{/courses/search}" method="get">
+        <input type="text" name="courseNum" placeholder="e.g. IT4045C"
+               th:value="${searchQuery}" />
+        <button type="submit">Search</button>
+    </form>
+
+    <p th:if="${message}" th:text="${message}" style="color:gray;"></p>
+
+    <hr>
+
+    <div class="course-list">
+        <h3>Course Results</h3>
+        <ul>
+            <li th:each="course : ${courses}">
+                <a th:href="@{'/courses/' + ${course.courseId}}"
+                   th:text="${course.courseNumber} + ' - ' + ${course.courseName}"></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="course-details">
+        <div th:if="${course != null}">
+            <h3 th:text="${course.courseNumber} + ' - ' + ${course.courseName}"></h3>
+            <p th:text="${course.description}"></p>
+            <ul>
+                <li th:each="comment : ${course.userComments}">
+                    <p th:text="${comment.comment}"></p>
+                </li>
+            </ul>
+            <form th:action="'/createComment'" method="post">
+                <!-- create the comment based on the form -->
+
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
