@@ -51,7 +51,10 @@ private final EntityManager entityManager;
         return courseRepository.findAll();
     }
 
-
+    @Override
+    public Course getCourseById(Integer id) {
+        return courseRepository.findById(id).orElse(null);
+    }
 
     @Override
     public void commentOnCourse(String comment, User user, Course course) {
