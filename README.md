@@ -127,3 +127,9 @@ IUserCommentData: interface for interacting with the database, specifically the 
 ### Github Project and Repo Link
 - [Github Project](https://github.com/users/urboi11/projects/4)
 - [Github Repo](https://github.com/urboi11/IT4045-Final-Project)
+
+### Project Set-up
+To set up the project, you will need to ensure you have system environment variables created to connect to the database. If you want to, you can change the name of the database to better match your environment.
+ - MYSQL_PASSWORD: your password to the MYSQL root account
+ - MYSQL_URL: jdbc:mysql://localhost:3306/finalproject?createDatabaseIfNotExist = true
+ - MYSQL_USERNAME: root, or the username for your MYSQL account
