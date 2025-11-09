@@ -38,9 +38,16 @@ public class  UserService implements IUserService{
         return userRepository.findAll();
     }
 
+    
+
     @Override
     public List<UserComments> getCommentsForUser(User user) {
         return userCommentRepository.findByUser(user);
+    }
+
+    @Override
+    public User getUser(Integer id) {
+        return userRepository.findById(id).get();
     }
 
 
