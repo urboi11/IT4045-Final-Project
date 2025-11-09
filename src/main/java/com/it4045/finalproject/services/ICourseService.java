@@ -13,6 +13,8 @@ public interface ICourseService {
 
  public List<Course> searchCourses (String courseNum);
 
+ public Course getCourseById(Integer id);
+
  public void commentOnCourse (String comment, User user, Course course);
 
  public void deleteComment(int userCommentId);
@@ -21,7 +23,7 @@ public List<UserComments> getCommentsForCourse(Course course);
 
 public int getRating (Course course);
 
-public void calculateRating (Course course, int rating);
+public void calculateRating (Integer courseId, String ratingInput);
 
 
 
