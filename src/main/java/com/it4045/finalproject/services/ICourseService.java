@@ -23,7 +23,7 @@ public List<UserComments> getCommentsForCourse(Course course);
 
 public int getRating (Course course);
 
-public void calculateRating (Course course, int rating);
+public void calculateRating (Integer courseId, String ratingInput);
 
 
 

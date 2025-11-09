@@ -1,12 +1,17 @@
 package com.it4045.finalproject.controllers;
 
 import com.it4045.finalproject.entities.Course;
+import com.it4045.finalproject.entities.User;
+import com.it4045.finalproject.repository.UserRepository;
 import com.it4045.finalproject.services.CourseService;
+import com.it4045.finalproject.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -54,22 +59,27 @@ public class CourseController {
         return "courses/list";
     }
 
-    // @PostMapping("/")
-    // public ResponseEntity<Course> createCourse(@RequestBody Course course) {
-    //     // Check admin privileges
-    //     // Save course to database
-    //     // Return created course
-    // }
+    @PostMapping
+    public String createCourse(@ModelAttribute Course course, RedirectAttributes redirectAttributes) {
+        courseService.createCourse(course);
+        // redirects to the user admin page
+        return "redirect:/users";
+    }
 
-    // @GetMapping("/{id}/comments")
-    // public ResponseEntity<List<UserComment>> getCourseComments(@PathVariable int id) {
-    //     // Fetch comments for course
-    //     // Return list of comments
-    // }
+    @PostMapping("/{id}/addrating")
+    public String addRating(@RequestParam("rating") String rating, @PathVariable Integer id) {
+        courseService.calculateRating(id, rating);
+        return  "redirect:/courses/{id}";
+    }
 
-    // @GetMapping("/{id}/rating")
-    // public ResponseEntity<Double> getCourseRating(@PathVariable int id) {
-    //     // Calculate average rating
-    //     // Return rating
-    // }
+    @PostMapping("/{id}/addcomment")
+    public String postComment(@RequestParam("commentInput") String comment, @PathVariable Integer id, HttpSession session) {
+        // need to also use the session in here to make sure the user is correct
+        // currently user is set to null so this needs to be changed once UserController
+        // is implemented
+        var course =  courseService.getCourseById(id);
+        courseService.commentOnCourse(comment, null, course);
+        return "redirect:/courses/{id}";
+    }
+
 }

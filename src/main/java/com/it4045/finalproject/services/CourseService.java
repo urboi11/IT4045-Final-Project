@@ -95,7 +95,10 @@ private final EntityManager entityManager;
     }
 
     @Override
-    public void calculateRating(Course course, int rating) {
+    public void calculateRating(Integer courseId, String ratingInput) {
+        var course = courseRepository.findById(courseId).orElse(null);
+        int rating = Integer.parseInt(ratingInput);
+
         double currentRating = course.getCourseRating();
         int ratingCount = course.getRating_count();
         double newRating = rating;

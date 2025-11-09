@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -30,16 +30,29 @@
     <div class="course-details">
         <div th:if="${course != null}">
             <h3 th:text="${course.courseNumber} + ' - ' + ${course.courseName}"></h3>
+            <p th:text="'Rating: ' + ${course.courseRating}"></p>
+            <form th:action="@{'/courses/' + ${course.courseId} + '/addrating'}" method="POST">
+                <fieldset>
+                    <input name="rating" type="radio" id="1star" value="1"/>
+                    <input name="rating" type="radio" id="2star" value="2"/>
+                    <input name="rating" type="radio" id="3star" value="3"/>
+                    <input name="rating" type="radio" id="4star" value="4"/>
+                    <input name="rating" type="radio" id="5star" value="5"/>
+                </fieldset>
+                <button type="submit">Submit Rating</button>
+            </form>
             <p th:text="${course.description}"></p>
+            <h4>Course Comments</h4>
+            <form th:action="'/courses/' + ${course.courseId} + '/addcomment'" method="post">
+                <textarea id="commentInput" name="commentInput" placeholder="Enter your comment"></textarea>
+                <button type="submit">Post Comment</button>
+            </form>
             <ul>
                 <li th:each="comment : ${course.userComments}">
                     <p th:text="${comment.comment}"></p>
                 </li>
             </ul>
-            <form th:action="'/createComment'" method="post">
-                <!-- create the comment based on the form -->
 
-            </form>
         </div>
     </div>
 
