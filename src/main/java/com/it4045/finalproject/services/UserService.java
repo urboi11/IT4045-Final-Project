@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
-public class  UserService implements IUserService{
+public class UserService implements IUserService{
 
 
     private UserRepository userRepository;
@@ -50,9 +50,12 @@ public class  UserService implements IUserService{
         return userRepository.findById(id).get();
     }
 
+    @Override
+    public void deleteComment(Integer commentId) {
+        userCommentRepository.deleteById(commentId);
+    }
+    
 
-    // @Override 
-    // public List<UserComments> getCommentsForUser(User user) {
-    //     return null;
-    // }
+
+
 }

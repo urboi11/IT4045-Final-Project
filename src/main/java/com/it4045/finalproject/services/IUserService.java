@@ -16,4 +16,6 @@ public interface IUserService {
 
     public User getUser(Integer id);
 
+    public void deleteComment(Integer commentId);
+
 }
