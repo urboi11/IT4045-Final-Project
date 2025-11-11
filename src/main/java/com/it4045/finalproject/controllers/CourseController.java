@@ -66,13 +66,13 @@ public class CourseController {
         return "redirect:/users";
     }
 
-    @PostMapping("/{id}/addrating")
+    @PostMapping("/{id}/add-rating")
     public String addRating(@RequestParam("rating") String rating, @PathVariable Integer id) {
         courseService.calculateRating(id, rating);
         return  "redirect:/courses/{id}";
     }
 
-    @PostMapping("/{id}/addcomment")
+    @PostMapping("/{id}/add-comment")
     public String postComment(@RequestParam("commentInput") String comment, @PathVariable Integer id, HttpSession session) {
         // need to also use the session in here to make sure the user is correct
         // currently user is set to null so this needs to be changed once UserController

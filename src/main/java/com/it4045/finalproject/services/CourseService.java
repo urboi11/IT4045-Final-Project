@@ -75,7 +75,7 @@ private final EntityManager entityManager;
         UserComments targetComment = entityManager.find(UserComments.class, userCommentId);
         Course targetCourse = targetComment.getCourse();
         userCommentRepository.deleteById(userCommentId);
-        targetCourse.setRating_count(targetCourse.getRating_count()-1);
+        targetCourse.setRatingCount(targetCourse.getRatingCount()-1);
 
     }
 
@@ -100,14 +100,14 @@ private final EntityManager entityManager;
         int rating = Integer.parseInt(ratingInput);
 
         double currentRating = course.getCourseRating();
-        int ratingCount = course.getRating_count();
+        int ratingCount = course.getRatingCount();
         double newRating = rating;
 
         if (currentRating != 0) {
             newRating = ((currentRating * ratingCount) + rating) / (ratingCount + 1);
         }
         course.setCourseRating(newRating);
-        course.setRating_count(ratingCount + 1); // increments rating_count since we get a new rating
+        course.setRatingCount(ratingCount + 1); // increments rating_count since we get a new rating
         courseRepository.save(course);
     }
 }
