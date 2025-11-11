@@ -133,3 +133,9 @@ To set up the project, you will need to ensure you have system environment varia
  - MYSQL_PASSWORD: your password to the MYSQL root account
  - MYSQL_URL: jdbc:mysql://localhost:3306/finalproject?createDatabaseIfNotExist = true
  - MYSQL_USERNAME: root, or the username for your MYSQL account
+
+
+### Code Review
+Here is a video explaining some of the endpoints we have covered in our project. 
+- [Youtube Video](https://www.youtube.com/watch?v=2laoNpcKkO8)
+
