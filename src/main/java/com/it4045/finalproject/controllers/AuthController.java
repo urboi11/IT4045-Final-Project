@@ -11,14 +11,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.it4045.finalproject.entities.SignUpRequest;
 import com.it4045.finalproject.entities.User;
+import com.it4045.finalproject.repository.UserRepository;
+import com.it4045.finalproject.security.WebSecurityConfig;
+import com.it4045.finalproject.services.UserService;
+
+import lombok.AllArgsConstructor;
 
 @Controller 
+@AllArgsConstructor
 public class AuthController {
+
+    private final UserService userService;
+
+    private final WebSecurityConfig securityConfig;
 
     @GetMapping("/login")
     public String loginPage() {
         return "login";
     }
+
 
     @GetMapping("/signup")
     public String signUpPage(Model model) {
@@ -27,15 +38,25 @@ public class AuthController {
     }
     
     @PostMapping("/signup")
-    public String handleSignUp(@ModelAttribute("SignUpRequest") SignUpRequest formData) {
-        return null;
-    }
+    public String handleSignUp(@ModelAttribute("SignUpRequest") SignUpRequest userData) {
+        User user = new User();
+        user.setUserFirstName(userData.getFirstName());
+        user.setUserLastName(userData.getLastName());
+        user.setUserEmail(userData.getEmail());
+        user.setUserPass(securityConfig.passwordEncoder().encode(userData.getPassword()));
+        user.setRole("User");
 
-    // @PostMapping
-    // public ResponseEntity<User> login(@RequestBody LoginRequest request) {
-    //     return null;
-        // Validate credentials
-        // Authenticate user
-        // Return user details or token
-    // }
+        if(userService.get)
+
+        //Figure out this logic.
+        try{
+            userService.createUser(user);
+            return "login";
+        }
+        //TODO: Something failed.
+        catch(Exception E){      
+            return "login";
+        }
+
+    }
 }
