@@ -56,9 +56,13 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public String getUserEmail(String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserEmail'");
+    public User getUserEmail(String email) {
+        try {
+            return userRepository.findByUserEmail(email);
+        }
+        catch(Exception E){
+            return null;
+        }
     }
 
     

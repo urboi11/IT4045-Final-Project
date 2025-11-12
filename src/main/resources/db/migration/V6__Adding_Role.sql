@@ -1,6 +1,0 @@
-ALTER TABLE users
-DROP COLUMN is_admin;
-
-
-ALTER TABLE users
-ADD COLUMN role VARCHAR(255); 

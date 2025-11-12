@@ -16,7 +16,7 @@ public interface IUserService {
 
     public User getUser(Integer id);
 
-    public String getUserEmail(String email);
+    public User getUserEmail(String email);
 
     public void deleteComment(Integer commentId);
 
