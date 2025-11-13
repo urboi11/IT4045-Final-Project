@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.it4045.finalproject.dtos.LoginRequest;
 import com.it4045.finalproject.dtos.SignUpRequest;
 import com.it4045.finalproject.dtos.UserDto;
@@ -41,6 +43,8 @@ public class AuthController {
     //TODO:
     @PostMapping("/login")
     public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest) {
+        
+        
         if(userService.login(loginRequest) != null){
             return "redirect:/courses";
         };
@@ -52,16 +56,21 @@ public class AuthController {
     @GetMapping("/signup")
     public String signUp(Model model){
         model.addAttribute("signUpRequest", new SignUpRequest());
-        return "signup";
+        return "/auth/signup";
     }
 
     @PostMapping("/signup")
-    public String signUp(@ModelAttribute("signUpRequest") SignUpRequest request, Model model) {
-        if(userService.signUp(request) != null){
+    public String signUp(@ModelAttribute("signUpRequest") SignUpRequest request, Model model, RedirectAttributes redirectAttributes) {
+       
+       try{
+            userService.signUp(request);
+            // redirectAttributes.addFlashAttribute("userName", user.getUserFirstName());
             return "redirect:/auth/login";
         }
-        model.addAttribute("errorOnSignUp", new ErrorOnSignUpException("Error During Signup."));
-        return "redirect:/auth/login";
-        
+        catch(AccountExistsException e){
+            redirectAttributes.addFlashAttribute("AlreadyExists", new AccountExistsException("Account already exists"));
+            return "redirect:/auth/login";    
+        }
+
     }
 }

@@ -4,9 +4,15 @@
         <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
         <title>Login Page</title>
     </head>
+    <!--TODO: Get DTO to show here. -->
+    <div th:if="${userName}">
+        <script>
+            alert("Sign Up Successful!")
+        </script>
+    </div>
     <div th:if="${AlreadyExists}">
         <script>
-            alert("This email already exists within the system!")
+            alert("Account already exists")
         </script>
     </div>
     <div th:if="${ErrorOccurred}">

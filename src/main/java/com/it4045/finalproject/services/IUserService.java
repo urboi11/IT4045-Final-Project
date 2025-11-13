@@ -24,5 +24,5 @@ public interface IUserService {
 
     public UserDto login(LoginRequest login);
     
-    public UserDto signUp(SignUpRequest signUp);
+    public void signUp(SignUpRequest signUp);
 }

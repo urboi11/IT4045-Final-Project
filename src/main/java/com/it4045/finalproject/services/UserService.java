@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.it4045.finalproject.entities.UserComments;
 import com.it4045.finalproject.exceptions.AccountDoesNotExistException;
+import com.it4045.finalproject.exceptions.AccountExistsException;
 import com.it4045.finalproject.exceptions.IncorrectPasswordException;
 import com.it4045.finalproject.mappers.UserAndCommentsMapper;
 import com.it4045.finalproject.dtos.LoginRequest;
@@ -65,7 +66,7 @@ public class UserService implements IUserService{
     public UserDto login(LoginRequest login) {
         //Check to make sure email exists
         User user = userRepository.findByEmail(login.getUsername()).orElseThrow(() -> {
-            return new AccountDoesNotExistException("Acccount Does Not Exist");
+            throw new AccountDoesNotExistException("Acccount Does Not Exist");
         });
         //Check that password is valid.
         if(!user.getPassword().equals(login.getPassword())) {
@@ -77,10 +78,21 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public UserDto signUp(SignUpRequest signUp) {
-        //Create new User object to create new user. 
-        //If successful, return new username.
-        return null; 
+    public void signUp(SignUpRequest signUp) {
+        
+
+        try{
+            User user = userRepository.findByEmail(signUp.getEmail()).orElse(userRepository.save(new User(
+                signUp.getFirstName(), signUp.getLastName(), signUp.getEmail(), signUp.getPassword(), "User"
+            )));
+    
+            if(user != null){
+                throw new AccountExistsException("User Already Exists Exception");
+            }
+        }
+        catch(Exception e){
+        }
+        
     }
     
 
