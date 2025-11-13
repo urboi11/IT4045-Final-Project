@@ -18,10 +18,14 @@ import com.it4045.finalproject.dtos.LoginRequest;
 import com.it4045.finalproject.dtos.SignUpRequest;
 import com.it4045.finalproject.dtos.UserDto;
 import com.it4045.finalproject.entities.User;
+import com.it4045.finalproject.exceptions.AccountDoesNotExistException;
 import com.it4045.finalproject.exceptions.AccountExistsException;
 import com.it4045.finalproject.exceptions.ErrorOnSignUpException;
+import com.it4045.finalproject.exceptions.IncorrectPasswordException;
 import com.it4045.finalproject.services.UserService;
 
+import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 import lombok.AllArgsConstructor;
 
 
@@ -42,13 +46,18 @@ public class AuthController {
 
     //TODO:
     @PostMapping("/login")
-    public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest) {
-        
-        
-        if(userService.login(loginRequest) != null){
-            return "redirect:/courses";
-        };
-        return "redirect:/auth/login";
+    public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest, HttpSession session) {
+
+        try{
+                userService.login(loginRequest);
+                session.setAttribute("CurrentUser", loginRequest.getUsername());
+                return "redirect:/courses";
+        }
+        catch(AccountDoesNotExistException | IncorrectPasswordException e) {
+            
+            return "redirect:/auth/login";
+        }
+
 
     }
     
@@ -64,7 +73,6 @@ public class AuthController {
        
        try{
             userService.signUp(request);
-            // redirectAttributes.addFlashAttribute("userName", user.getUserFirstName());
             return "redirect:/auth/login";
         }
         catch(AccountExistsException e){
@@ -73,4 +81,7 @@ public class AuthController {
         }
 
     }
+
+    //TODO: Implement Logout Feature. 
+    
 }

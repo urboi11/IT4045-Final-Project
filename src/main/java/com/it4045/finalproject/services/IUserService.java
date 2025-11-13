@@ -25,4 +25,6 @@ public interface IUserService {
     public UserDto login(LoginRequest login);
     
     public void signUp(SignUpRequest signUp);
+
+    public User findByEmail(String email);
 }

@@ -65,9 +65,15 @@ public class UserService implements IUserService{
     @Override
     public UserDto login(LoginRequest login) {
         //Check to make sure email exists
-        User user = userRepository.findByEmail(login.getUsername()).orElseThrow(() -> {
-            throw new AccountDoesNotExistException("Acccount Does Not Exist");
-        });
+        // User user = userRepository.findByEmail(login.getUsername()).orElseThrow(() -> {
+        //     throw new AccountDoesNotExistException("Acccount Does Not Exist");
+        // });
+
+        User user = userRepository.findByEmail(login.getUsername());
+
+        if(user == null){
+            throw new AccountDoesNotExistException("Account Does not Exist.");
+        }
         //Check that password is valid.
         if(!user.getPassword().equals(login.getPassword())) {
             throw new IncorrectPasswordException("Incorrect Password.");
@@ -80,19 +86,24 @@ public class UserService implements IUserService{
     @Override
     public void signUp(SignUpRequest signUp) {
         
-
-        try{
-            User user = userRepository.findByEmail(signUp.getEmail()).orElse(userRepository.save(new User(
-                signUp.getFirstName(), signUp.getLastName(), signUp.getEmail(), signUp.getPassword(), "User"
-            )));
-    
-            if(user != null){
+            User userReturned = userRepository.findByEmail(signUp.getEmail());
+            if(userReturned != null){
                 throw new AccountExistsException("User Already Exists Exception");
             }
-        }
-        catch(Exception e){
-        }
+            User user = new User();
+            user.setFirstname(signUp.getFirstName());
+            user.setLastname(signUp.getLastName());
+            user.setEmail(signUp.getEmail());
+            user.setPassword(signUp.getPassword());
+            user.setRole("User");
+
+            userRepository.save(user);
         
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
     
 
