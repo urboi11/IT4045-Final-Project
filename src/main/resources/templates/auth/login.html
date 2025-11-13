@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+        <title>Login Page</title>
+    </head>
+    <!--TODO: Get DTO to show here. -->
+    <div th:if="${userName}">
+        <script>
+            alert("Sign Up Successful!")
+        </script>
+    </div>
+    <div th:if="${AlreadyExists}">
+        <script>
+            alert("Account already exists")
+        </script>
+    </div>
+    <div th:if="${ErrorOccurred}">
+        <script>
+            alert("An Error Has Occurred with the sign in process.")
+        </script>
+    </div>
+    <body>
+        <form th:action="@{/auth/login}" method="post" class="form" th:object="${loginRequest}">
+            <div style="margin-bottom:12px;">
+                <label>Username: </label>   
+                <input type="text" name="username" th:field="*{username}">
+            </div>
+            <div style="margin-bottom:12px;">
+                <label>Password: </label>
+                <input type="password" name="password" th:field="*{password}">
+            </div>
+            <input type="submit" value="Login">
+        </form>
+        <form th:action="@{/auth/signup}" method="get" class="form">
+            <input type="submit" value="Sign Up">
+        </form>
+    </body>
+</html>
