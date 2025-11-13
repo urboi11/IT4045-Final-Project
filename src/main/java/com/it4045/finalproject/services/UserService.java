@@ -54,14 +54,6 @@ public class UserService implements IUserService{
     public void deleteComment(Integer commentId) {
         userCommentRepository.deleteById(commentId);
     }
-
-    @Override
-    public String getUserEmail(String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserEmail'");
-    }
-
-    
     
 
 

@@ -18,23 +18,23 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="userId")
+    @Column(name="user_id")
     private Integer userId;
 
-    @Column(name="firstName")
+    @Column(name="user_first_name")
     private String userFirstName;
 
-    @Column(name="lastName")
+    @Column(name="user_last_name")
     private String userLastName;
 
-    @Column(name="email")
+    @Column(name="user_email")
     private String userEmail;
 
-    @Column(name="password")
+    @Column(name="user_pass")
     private String userPass;
 
-    @Column(name="role")
-    private String role;
+    @Column(name="is_admin")
+    private boolean isAdmin;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.EAGER)
     @Builder.Default
