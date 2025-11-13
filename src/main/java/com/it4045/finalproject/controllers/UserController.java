@@ -60,11 +60,11 @@ public class UserController {
     }
 
     //HTTP BODY?
-    // @DeleteMapping("/comments/{commentId}")
-    // public ResponseEntity<Void> deleteComment(@PathVariable int commentId) {
-    //     // Validate ownership
-    //     // Delete comment
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable int commentId) {
+        // Validate ownership
+        // Delete comment
 
-    //     // Return success status
-    // }
+        // Return success status
+    }
 }
