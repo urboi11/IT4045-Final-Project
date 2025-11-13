@@ -4,16 +4,6 @@
         <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
         <title>Login Page</title>
     </head>
-    <div th:if="${AlreadyExists}">
-        <script>
-            alert("This email already exists within the system!")
-        </script>
-    </div>
-    <div th:if="${ErrorOccurred}">
-        <script>
-            alert("An Error Has Occurred with the sign in process.")
-        </script>
-    </div>
     <body>
         <form th:action="@{/login}" method="post" class="form">
             <div style="margin-bottom:12px;">

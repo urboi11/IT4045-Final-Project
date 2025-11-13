@@ -38,32 +38,25 @@ public class AuthController {
     }
     
     @PostMapping("/signup")
-    public String handleSignUp(@ModelAttribute("SignUpRequest") SignUpRequest userData, Model model) {
-        //TODO: Test if this logic is correct.
-        if(userService.getUserEmail(userData.getEmail()) != null){
-            model.addAttribute("AlreadyExists", true);
+    public String handleSignUp(@ModelAttribute("SignUpRequest") SignUpRequest userData) {
+        User user = new User();
+        user.setUserFirstName(userData.getFirstName());
+        user.setUserLastName(userData.getLastName());
+        user.setUserEmail(userData.getEmail());
+        user.setUserPass(securityConfig.passwordEncoder().encode(userData.getPassword()));
+        user.setRole("User");
+
+        if(userService.get)
+
+        //Figure out this logic.
+        try{
+            userService.createUser(user);
             return "login";
         }
-        else{
-            User user = new User();
-            user.setUserFirstName(userData.getFirstName());
-            user.setUserLastName(userData.getLastName());
-            user.setUserEmail(userData.getEmail());
-            user.setUserPass(securityConfig.passwordEncoder().encode(userData.getPassword()));
-            user.setRole("User");
-            //Figure out this logic.
-            try{
-                userService.createUser(user);
-                return "login";
-            }
-            //TODO: Something failed.
-            catch(Exception E){
-                model.addAttribute("ErrorOccurred", true);      
-                return "login";
-            }
-
+        //TODO: Something failed.
+        catch(Exception E){      
+            return "login";
         }
-
 
     }
 }
