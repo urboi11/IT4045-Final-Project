@@ -1,23 +1,67 @@
 package com.it4045.finalproject.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.Optional;
 
-@RestController
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.it4045.finalproject.dtos.LoginRequest;
+import com.it4045.finalproject.dtos.SignUpRequest;
+import com.it4045.finalproject.dtos.UserDto;
+import com.it4045.finalproject.entities.User;
+import com.it4045.finalproject.exceptions.AccountExistsException;
+import com.it4045.finalproject.exceptions.ErrorOnSignUpException;
+import com.it4045.finalproject.services.UserService;
+
+import lombok.AllArgsConstructor;
+
+
+
+@Controller
+@AllArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
 
-    // @PostMapping("/login")
-    // public ResponseEntity<User> login(@RequestBody LoginRequest request) {
-    //     // Validate credentials
-    //     // Authenticate user
-    //     // Return user details or token
-    // }
+    private final UserService userService;
 
-    // @PostMapping("/signup")
-    // public ResponseEntity<User> signup(@RequestBody SignupRequest request) {
-    //     // Check if email already exists
-    //     // Create new user
-    //     // Return success response
-    // }
+    @GetMapping("/login")
+    public String login(Model model){
+        model.addAttribute("loginRequest", new LoginRequest());
+        return "/auth/login";    
+    }
+
+
+    //TODO:
+    @PostMapping("/login")
+    public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest) {
+        if(userService.login(loginRequest) != null){
+            return "redirect:/courses";
+        };
+        return "redirect:/auth/login";
+
+    }
+    
+
+    @GetMapping("/signup")
+    public String signUp(Model model){
+        model.addAttribute("signUpRequest", new SignUpRequest());
+        return "signup";
+    }
+
+    @PostMapping("/signup")
+    public String signUp(@ModelAttribute("signUpRequest") SignUpRequest request, Model model) {
+        if(userService.signUp(request) != null){
+            return "redirect:/auth/login";
+        }
+        model.addAttribute("errorOnSignUp", new ErrorOnSignUpException("Error During Signup."));
+        return "redirect:/auth/login";
+        
+    }
 }
