@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.it4045.finalproject.entities.LoginRequest;
 import com.it4045.finalproject.entities.SignUpRequest;
 import com.it4045.finalproject.entities.User;
 import com.it4045.finalproject.repository.UserRepository;
@@ -27,14 +26,8 @@ public class AuthController {
     private final WebSecurityConfig securityConfig;
 
     @GetMapping("/login")
-    public String loginPage(Model model) {
-        model.addAttribute("LoginRequest", new LoginRequest());
+    public String loginPage() {
         return "login";
-    }
-
-    @PostMapping("/")
-    public String handleLoginPage(@ModelAttribute("LoginRequest") LoginRequest userData, Model model) {
-        return null;
     }
 
 

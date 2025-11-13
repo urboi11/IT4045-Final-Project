@@ -8,6 +8,3 @@ CREATE TABLE users
     `role`    VARCHAR(255)       NULL,
     CONSTRAINT pk_users PRIMARY KEY (userid)
 );
-
-ALTER TABLE users
-    ADD CONSTRAINT uc_users_email UNIQUE (email);

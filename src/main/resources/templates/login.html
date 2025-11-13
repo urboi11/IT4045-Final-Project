@@ -15,14 +15,14 @@
         </script>
     </div>
     <body>
-        <form th:action="@{/}" method="post" class="form">
+        <form th:action="@{/login}" method="post" class="form">
             <div style="margin-bottom:12px;">
                 <label>Username: </label>   
                 <input type="text" name="username">
             </div>
             <div style="margin-bottom:12px;">
                 <label>Password: </label>
-                <input type="password" name="password">
+                <input type="text" name="password">
             </div>
             <input type="submit" value="Login">
         </form>
