@@ -34,7 +34,7 @@ public class Course {
 
     private String description;
 
-    private int rating_count;
+    private int ratingCount;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @Builder.Default

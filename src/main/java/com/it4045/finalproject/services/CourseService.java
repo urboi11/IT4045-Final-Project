@@ -6,6 +6,7 @@ import com.it4045.finalproject.entities.UserComments;
 import com.it4045.finalproject.repository.CourseRepository;
 import com.it4045.finalproject.repository.UserRepository;
 import com.it4045.finalproject.repository.UserCommentRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -40,10 +41,15 @@ private final EntityManager entityManager;
         return resultList;
     }*/
 
+//    @Override
+//    public List<Course> searchCourses(String courseNum) {
+//        List<Course> allCourses = courseRepository.findAll();
+//        return allCourses.stream().filter(c -> c.getCourseNumber().equals(courseNum)).toList();
+//    }
+
     @Override
     public List<Course> searchCourses(String courseNum) {
-        List<Course> allCourses = courseRepository.findAll();
-        return allCourses.stream().filter(c -> c.getCourseNumber().equals(courseNum)).toList();
+        return courseRepository.findByCourseNumber(courseNum);
     }
 
     @Override
@@ -75,7 +81,7 @@ private final EntityManager entityManager;
         UserComments targetComment = entityManager.find(UserComments.class, userCommentId);
         Course targetCourse = targetComment.getCourse();
         userCommentRepository.deleteById(userCommentId);
-        targetCourse.setRating_count(targetCourse.getRating_count()-1);
+        targetCourse.setRatingCount(targetCourse.getRatingCount()-1);
 
     }
 
@@ -95,19 +101,21 @@ private final EntityManager entityManager;
     }
 
     @Override
-    public void calculateRating(Integer courseId, String ratingInput) {
-        var course = courseRepository.findById(courseId).orElse(null);
-        int rating = Integer.parseInt(ratingInput);
+    public void calculateRating(Integer courseId, int rating) {
+        var course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseId));
+
+        // The UNNECESSARY 'try-catch' and 'Integer.parseInt' can be removed
 
         double currentRating = course.getCourseRating();
-        int ratingCount = course.getRating_count();
+        int ratingCount = course.getRatingCount();
         double newRating = rating;
 
         if (currentRating != 0) {
             newRating = ((currentRating * ratingCount) + rating) / (ratingCount + 1);
         }
         course.setCourseRating(newRating);
-        course.setRating_count(ratingCount + 1); // increments rating_count since we get a new rating
+        course.setRatingCount(ratingCount + 1);
         courseRepository.save(course);
     }
 }
