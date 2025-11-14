@@ -30,19 +30,12 @@ public class AuthController {
     //     // Return user details or token
     // }
 
-    // @PostMapping("/signup")
-    // public ResponseEntity<User> signup(@RequestBody SignupRequest request) {
-    //     // Check if email already exists
-    //     // Create new user
-    //     // Return success response
-    // }
-
-
     /**
-     * Handle user registration for POST Method
+     * Handle user registration
      *
      * @param registerUserRequest
      * @param redirectAttributes
+     *
      * @redirects to login page on success, back to register on failure
      */
     // stub for registering a user

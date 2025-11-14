@@ -23,7 +23,6 @@ public class  UserService implements IUserService{
     private final UserCommentRepository userCommentRepository;
     private final UserMapper userMapper;
 
-
     /**
      *Registers a new user after validating inputs.
      *

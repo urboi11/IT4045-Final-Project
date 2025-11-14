@@ -3,6 +3,8 @@ package com.it4045.finalproject.services;
 import com.it4045.finalproject.entities.Course;
 import com.it4045.finalproject.entities.User;
 import com.it4045.finalproject.entities.UserComments;
+import com.it4045.finalproject.exceptions.CourseNameExistsException;
+import com.it4045.finalproject.exceptions.CourseNumberExistsException;
 import com.it4045.finalproject.repository.CourseRepository;
 import com.it4045.finalproject.repository.UserRepository;
 import com.it4045.finalproject.repository.UserCommentRepository;
@@ -26,9 +28,46 @@ private final UserRepository userRepository;
 private final UserCommentRepository userCommentRepository;
 private final EntityManager entityManager;
 
-
+    /**
+     * Creates a new course after validating its required fields and ensuring no duplicates exist.
+     *
+     * @param course
+     *
+     * @return the Course entity
+     *
+     * @throws IllegalArgumentException   if any required field is blank
+     * @throws CourseNameExistsException  if a course with the same name already exists at the given university
+     * @throws CourseNumberExistsException if a course with the same number already exists at the given university
+     */
     @Override
     public Course createCourse(Course course) {
+
+        if (course.getCourseNumber().isBlank()) {
+            throw new IllegalArgumentException("Course number is required");
+        }
+
+        if (course.getCourseName().isBlank()) {
+            throw new IllegalArgumentException("Course name is required");
+        }
+
+        if (course.getUniversity().isBlank()) {
+            throw new IllegalArgumentException("University is required");
+        }
+
+        if (course.getDescription().isBlank()) {
+            throw new IllegalArgumentException("Description is required");
+        }
+
+        // Check for duplicates by course name at the same university
+        if (!courseRepository.findByUniversityAndCourseName(course.getUniversity(), course.getCourseName()).isEmpty()) {
+            throw new CourseNameExistsException("A course with this name already exists at the university");
+        }
+
+        // Check for duplicates by course number at the same university
+        if (!courseRepository.findByUniversityAndCourseNumber(course.getUniversity(), course.getCourseNumber()).isEmpty()) {
+            throw new CourseNumberExistsException("A course with this number already exists at the university");
+        }
+
         courseRepository.save(course);
         return course;
     }
