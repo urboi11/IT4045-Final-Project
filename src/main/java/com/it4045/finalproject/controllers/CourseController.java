@@ -67,7 +67,7 @@ public class CourseController {
     }
 
     @PostMapping("/{id}/add-rating")
-    public String addRating(@RequestParam("rating") String rating, @PathVariable Integer id) {
+    public String addRating(@RequestParam("rating") int rating, @PathVariable Integer id) {
         courseService.calculateRating(id, rating);
         return  "redirect:/courses/{id}";
     }

@@ -6,6 +6,7 @@ import com.it4045.finalproject.entities.UserComments;
 import com.it4045.finalproject.repository.CourseRepository;
 import com.it4045.finalproject.repository.UserRepository;
 import com.it4045.finalproject.repository.UserCommentRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -100,9 +101,11 @@ private final EntityManager entityManager;
     }
 
     @Override
-    public void calculateRating(Integer courseId, String ratingInput) {
-        var course = courseRepository.findById(courseId).orElse(null);
-        int rating = Integer.parseInt(ratingInput);
+    public void calculateRating(Integer courseId, int rating) {
+        var course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseId));
+
+        // The UNNECESSARY 'try-catch' and 'Integer.parseInt' can be removed
 
         double currentRating = course.getCourseRating();
         int ratingCount = course.getRatingCount();
@@ -112,7 +115,7 @@ private final EntityManager entityManager;
             newRating = ((currentRating * ratingCount) + rating) / (ratingCount + 1);
         }
         course.setCourseRating(newRating);
-        course.setRatingCount(ratingCount + 1); // increments rating_count since we get a new rating
+        course.setRatingCount(ratingCount + 1);
         courseRepository.save(course);
     }
 }
