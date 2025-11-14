@@ -36,6 +36,7 @@ public class  UserService implements IUserService{
      * @exception UserEmailExistsException User email exists
      * @exception WeakPasswordException User's password invalid
      */
+    @Transactional
     @Override
     public UserDto createUser(String firstName, String lastName, String email, String password) {
        if (firstName.isBlank()) {
@@ -69,18 +70,36 @@ public class  UserService implements IUserService{
         return userMapper.toDto(userRepository.save(user));
     }
 
+    /**
+     * Gets username by user ID.
+     *
+     * @param userId
+     *
+     *
+     * @return user's email
+     */
     @Override
-    public String getUserName(int userId) {
+    public String getUserEmail(int userId) {
         return userRepository.findById(userId).get().getUserEmail();
-
-
     }
 
+    /**
+     * Gets all users in the system.
+     *
+     * @return list of users
+     */
     @Override
-    public List<User> getUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+
+    /** Gets comments for a specific user.
+     *
+     * @param user User entity
+     *
+     * @return list of user comments
+     */
     @Override
     public List<UserComments> getCommentsForUser(User user) {
         return userCommentRepository.findByUser(user);

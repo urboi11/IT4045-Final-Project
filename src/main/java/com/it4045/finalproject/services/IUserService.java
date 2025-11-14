@@ -10,9 +10,9 @@ import com.it4045.finalproject.entities.UserComments;
 public interface IUserService {
     public UserDto createUser(String firstName, String lastName, String email, String password);
 
-    public String getUserName(int userId);
+    public String getUserEmail(int userId);
 
-    public List<User> getUsers();
+    public List<User> getAllUsers();
 
     public List<UserComments> getCommentsForUser(User user);
 

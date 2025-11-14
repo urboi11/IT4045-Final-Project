@@ -37,10 +37,18 @@ public class AuthController {
     //     // Return success response
     // }
 
+
+    /**
+     * Handle user registration for POST Method
+     *
+     * @param registerUserRequest
+     * @param redirectAttributes
+     * @redirects to login page on success, back to register on failure
+     */
     // stub for registering a user
     @PostMapping("/register")
     public String register(@ModelAttribute RegisterUserRequest registerUserRequest,
-                               HttpSession httpSession, RedirectAttributes redirectAttributes) {
+                                RedirectAttributes redirectAttributes) {
         try {
             // Call service layer for authentication
             UserDto user = userService.createUser(registerUserRequest.getUserFirstName(),
@@ -51,7 +59,7 @@ public class AuthController {
             redirectAttributes.addFlashAttribute("successMessage", "Account Created Successfully! Please log in.");
             return "redirect:/login";
 
-        } catch (WeakPasswordException | IllegalArgumentException |UserEmailExistsException e) {
+        } catch (WeakPasswordException | IllegalArgumentException | UserEmailExistsException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/register";
         }

@@ -47,7 +47,7 @@ private final EntityManager entityManager;
     }
 
     @Override
-    public List<Course> getCourses() {
+    public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
 
