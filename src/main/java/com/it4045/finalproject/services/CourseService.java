@@ -40,10 +40,15 @@ private final EntityManager entityManager;
         return resultList;
     }*/
 
+//    @Override
+//    public List<Course> searchCourses(String courseNum) {
+//        List<Course> allCourses = courseRepository.findAll();
+//        return allCourses.stream().filter(c -> c.getCourseNumber().equals(courseNum)).toList();
+//    }
+
     @Override
     public List<Course> searchCourses(String courseNum) {
-        List<Course> allCourses = courseRepository.findAll();
-        return allCourses.stream().filter(c -> c.getCourseNumber().equals(courseNum)).toList();
+        return courseRepository.findByCourseNumber(courseNum);
     }
 
     @Override
