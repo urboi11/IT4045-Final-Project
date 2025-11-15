@@ -24,7 +24,7 @@ public class CourseController {
     // gets all courses and is the default list view
     @GetMapping
     public String getAllCourses(Model model) {
-        List<Course> courses = courseService.getCourses();
+        List<Course> courses = courseService.getAllCourses();
         model.addAttribute("courses", courses);
         return "courses/list";
     }
@@ -53,7 +53,7 @@ public class CourseController {
         model.addAttribute("course", course);
 
         // to maintain the list of courses on the side
-        List<Course> courses = courseService.getCourses();
+        List<Course> courses = courseService.getAllCourses();
         model.addAttribute("courses", courses);
 
         return "courses/list";
