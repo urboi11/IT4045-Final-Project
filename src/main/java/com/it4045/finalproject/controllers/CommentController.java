@@ -1,13 +1,51 @@
 package com.it4045.finalproject.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.it4045.finalproject.entities.Course;
+import com.it4045.finalproject.entities.User;
+import com.it4045.finalproject.entities.UserComments;
+import com.it4045.finalproject.services.CourseService;
+import com.it4045.finalproject.services.UserService;
+import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/comments")
-
+@AllArgsConstructor
 
 public class CommentController {
+    private UserService userService;
+    private CourseService courseService;
+
+    @PostMapping("/")
+    public ResponseEntity<UserComments> PostComment(@RequestParam("comment") String comment, @PathVariable Integer id, HttpSession session) {
+        User postingUser = null; // Replace with actual user retrieval logic once available
+        Course targetCourse = courseService.getCourseById(id);
+       if (comment.length() > 0){ // This should validate more things
+               UserComments createdComment = new UserComments();
+                createdComment.setComment(comment);
+                createdComment.setUser(postingUser);
+                createdComment.setCourse(targetCourse);
+                courseService.commentOnCourse(comment, postingUser, targetCourse);
+                return ResponseEntity.ok(createdComment);
+       }
+        else return ResponseEntity.badRequest().build();
+
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> DeleteComment(@PathVariable int id, HttpSession session) {
+        //Check if user owns comment
+        boolean userOwnsComment = true; // Replace with actual ownership check logic
+        if (userOwnsComment) {
+            courseService.deleteComment(id);
+            return ResponseEntity.ok().build();
+        }
+        else return ResponseEntity.status(403).build(); // Forbidden
+    }
+
 
     // @PostMapping("/")
     // public ResponseEntity<UserComment> postComment(@RequestBody CommentRequest request) {
