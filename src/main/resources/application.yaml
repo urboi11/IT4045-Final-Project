@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${MYSQL_URL}
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://localhost:3306/finalproject?createDatabaseIfNotExist = true
+    username: root
+    password: P@ssword
     
