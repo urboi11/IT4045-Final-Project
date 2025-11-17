@@ -1,0 +1,2 @@
+ALTER TABLE courses
+    ADD COLUMN rating_count INT DEFAULT 0 NOT NULL;
