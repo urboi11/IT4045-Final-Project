@@ -92,7 +92,7 @@ public class UserService implements IUserService{
             .firstname(signUp.getFirstName())
             .lastname(signUp.getLastName())
             .email(signUp.getEmail())
-            .password(signUp.getEmail())
+            .password(signUp.getPassword())
             .role("User").build();
 
             userRepository.save(user);
