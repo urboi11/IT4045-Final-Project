@@ -16,13 +16,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class User {
-    public User(String firstname, String lastname, String email, String password, String role){
-        this.firstname = firstname; 
-        this.lastname = lastname;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
