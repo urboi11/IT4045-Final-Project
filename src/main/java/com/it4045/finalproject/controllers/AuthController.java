@@ -44,8 +44,6 @@ public class AuthController {
         return "/auth/login";    
     }
 
-
-    //TODO:
     @PostMapping("/login")
     public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest, HttpServletRequest session) {
 

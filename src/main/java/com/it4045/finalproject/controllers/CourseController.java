@@ -28,8 +28,12 @@ public class CourseController {
     // gets all courses and is the default list view
     @GetMapping
     public String getAllCourses(Model model, HttpServletRequest session) {
-        
-        if(session.getSession().getAttribute("CurrentUser").equals(null)) {
+        try{
+            if(session.getSession().getAttribute("CurrentUser").equals(null)) {
+                return "redirect:/auth/login";
+            }
+        }
+        catch(Exception e){
             return "redirect:/auth/login";
         }
 

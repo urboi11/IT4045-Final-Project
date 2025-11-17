@@ -45,12 +45,16 @@ public class UserController {
     @GetMapping("/profile")
     public String showProfilePage(HttpServletRequest session, Model model) {
         
-
-        if(session.getSession().getAttribute("CurrentUser").equals(null)) {
+        try{
+            if(session.getSession().getAttribute("CurrentUser").equals(null)) {
+                return "redirect:/auth/login";
+            }
+        }
+        catch(Exception e){
             return "redirect:/auth/login";
         }
         //Check for Current Role of user
-        User user = userService.findByEmail(session.getAttribute("CurrentUser").toString());     
+        User user = userService.findByEmail(session.getSession().getAttribute("CurrentUser").toString());     
 
         model.addAttribute("Email", user.getEmail());
         model.addAttribute("Name", user.getFirstname() + " " + user.getLastname());
