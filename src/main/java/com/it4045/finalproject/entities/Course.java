@@ -28,7 +28,7 @@ public class Course {
     private String courseName;
 
     @Column(name="course_rating")
-    private double courseRating;
+    private byte courseRating;
 
     private String university;
 
@@ -36,7 +36,7 @@ public class Course {
 
     private int rating_count;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<UserComments> userComments = new ArrayList<>();
 

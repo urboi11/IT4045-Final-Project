@@ -36,7 +36,7 @@ public class User {
     @Column(name="is_admin")
     private boolean isAdmin;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY)
     @Builder.Default
     private List<UserComments> userComments = new ArrayList<>();
 
