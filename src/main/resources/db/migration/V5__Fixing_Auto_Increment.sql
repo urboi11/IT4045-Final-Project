@@ -1,7 +1,7 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 alter table users
-    modify userid int auto_increment;
+    modify user_id int auto_increment;
 
 alter table users
     auto_increment = 1;

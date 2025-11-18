@@ -24,6 +24,7 @@ import com.it4045.finalproject.exceptions.ErrorOnSignUpException;
 import com.it4045.finalproject.exceptions.IncorrectPasswordException;
 import com.it4045.finalproject.services.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.Session;
 import lombok.AllArgsConstructor;
@@ -43,14 +44,12 @@ public class AuthController {
         return "/auth/login";    
     }
 
-
-    //TODO:
     @PostMapping("/login")
-    public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest, HttpSession session) {
+    public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest, HttpServletRequest session) {
 
         try{
                 userService.login(loginRequest);
-                session.setAttribute("CurrentUser", loginRequest.getUsername());
+                session.getSession().setAttribute("CurrentUser", loginRequest.getUsername());
                 return "redirect:/courses";
         }
         catch(AccountDoesNotExistException | IncorrectPasswordException e) {
