@@ -13,7 +13,6 @@ import com.it4045.finalproject.dtos.UserDto;
 import com.it4045.finalproject.entities.User;
 import com.it4045.finalproject.repository.UserCommentRepository;
 import com.it4045.finalproject.repository.UserRepository;
-
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -65,9 +64,6 @@ public class UserService implements IUserService{
     @Override
     public UserDto login(LoginRequest login) {
         //Check to make sure email exists
-        // User user = userRepository.findByEmail(login.getUsername()).orElseThrow(() -> {
-        //     throw new AccountDoesNotExistException("Acccount Does Not Exist");
-        // });
 
         User user = userRepository.findByEmail(login.getUsername());
 
@@ -90,12 +86,13 @@ public class UserService implements IUserService{
             if(userReturned != null){
                 throw new AccountExistsException("User Already Exists Exception");
             }
-            User user = new User();
-            user.setFirstname(signUp.getFirstName());
-            user.setLastname(signUp.getLastName());
-            user.setEmail(signUp.getEmail());
-            user.setPassword(signUp.getPassword());
-            user.setRole("User");
+
+            User user = new User().builder()
+            .firstname(signUp.getFirstName())
+            .lastname(signUp.getLastName())
+            .email(signUp.getEmail())
+            .password(signUp.getPassword())
+            .role("User").build();
 
             userRepository.save(user);
         

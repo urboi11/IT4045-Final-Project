@@ -6,10 +6,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class UserDto {
-    private Integer userId;
+    private Integer userid;
 
-    private String userFirstName;
+    private String firstname;
 
-    private String userLastName;
+    private String lastname;
 
 }

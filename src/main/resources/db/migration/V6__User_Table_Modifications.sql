@@ -1,0 +1,2 @@
+ALTER TABLE users MODIFY is_admin VARCHAR(255) NOT NULL;
+ALTER TABLE users RENAME COLUMN is_admin TO role;
