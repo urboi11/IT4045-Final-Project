@@ -1,14 +1,11 @@
 package com.it4045.finalproject.mappers;
 
 
-import com.it4045.finalproject.dtos.UserDto;
+import org.mapstruct.Mapper;
 import com.it4045.finalproject.dtos.CommentsDto;
+import com.it4045.finalproject.dtos.UserDto;
 import com.it4045.finalproject.entities.User;
 import com.it4045.finalproject.entities.UserComments;
-
-import java.util.List;
-
-import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface UserAndCommentsMapper {

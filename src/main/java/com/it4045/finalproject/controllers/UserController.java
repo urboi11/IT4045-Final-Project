@@ -2,6 +2,14 @@ package com.it4045.finalproject.controllers;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import com.it4045.finalproject.dtos.CommentsDto;
 import com.it4045.finalproject.dtos.UserDto;
 import com.it4045.finalproject.entities.Course;
@@ -10,21 +18,11 @@ import com.it4045.finalproject.entities.UserComments;
 import com.it4045.finalproject.mappers.UserAndCommentsMapper;
 import com.it4045.finalproject.repository.UserCommentRepository;
 import com.it4045.finalproject.services.UserService;
+import com.it4045.finalproject.utils.UtilsForProject;
+
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import java.util.ArrayList;
-import java.util.List;
-import org.hibernate.annotations.Comments;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @Controller
@@ -41,18 +39,12 @@ public class UserController {
 
     private final UserCommentRepository commentRepository;
 
+    private final UtilsForProject utils;
 
     @GetMapping("/profile")
     public String showProfilePage(HttpServletRequest session, Model model) {
         
-        try{
-            if(session.getSession().getAttribute("CurrentUser").equals(null)) {
-                return "redirect:/auth/login";
-            }
-        }
-        catch(Exception e){
-            return "redirect:/auth/login";
-        }
+        utils.checkStatus(session);
         //Check for Current Role of user
         User user = userService.findByEmail(session.getSession().getAttribute("CurrentUser").toString());     
 
@@ -92,6 +84,7 @@ public class UserController {
 
     @GetMapping("/{id}/comments")
     public ResponseEntity<List<CommentsDto>> getUserComments(@PathVariable int id) {
+        
         // Retrieve all comments made by user
         User user = userService.getUser(id);
         List<UserComments> comments =  userService.getCommentsForUser(user);
