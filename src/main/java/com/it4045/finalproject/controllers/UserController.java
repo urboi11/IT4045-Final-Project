@@ -18,8 +18,6 @@ import com.it4045.finalproject.entities.UserComments;
 import com.it4045.finalproject.mappers.UserAndCommentsMapper;
 import com.it4045.finalproject.repository.UserCommentRepository;
 import com.it4045.finalproject.services.UserService;
-import com.it4045.finalproject.utils.UtilsForProject;
-
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,12 +37,17 @@ public class UserController {
 
     private final UserCommentRepository commentRepository;
 
-    private final UtilsForProject utils;
-
     @GetMapping("/profile")
     public String showProfilePage(HttpServletRequest session, Model model) {
         
-        utils.checkStatus(session);
+        try{
+            if(session.getSession().getAttribute("CurrentUser").equals(null)) {
+                return "redirect:/auth/login";
+            }
+        }
+        catch(Exception e){
+            return "redirect:/auth/login";
+        }
         //Check for Current Role of user
         User user = userService.findByEmail(session.getSession().getAttribute("CurrentUser").toString());     
 
