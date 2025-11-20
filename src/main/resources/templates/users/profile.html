@@ -5,8 +5,20 @@
         <title>Profile Page</title>
     </head>
     <body>
+        <h1 th:text="${isAdmin ? 'Admin Profile' : 'Profile'}"></h1>
+
+        <p>Name: <div th:text="${userInfo.firstname + ' ' + userInfo.lastname}"></div></p>
+        <p>Email: <div th:text="${userInfo.email}"></div></p>
+        <div>
+            <h2>Your Comments</h2>
+            <p th:if="${comments.size() == 0}">You have no comments.</p>
+            <div th:each="comment : ${comments}">
+                <p th:text="${comment.comment}"></p>
+            </div>
+        </div>
+
         <div th:if="${isAdmin}">
-            <h2>Create a Course</h2>
+            <h2>Add a New Course</h2>
             <!-- form to create a course -->
             <form th:action="@{/courses}"
                 method="post"
@@ -71,7 +83,16 @@
             </div>
         </form>
     </div>
-        <p>Name: <div th:text="${Name}"></div></p>
-        <p>Name: <div th:text="${Email}"></div></p>
+    <div th:if="${isAdmin}">
+        <h2>Users Registered</h2>
+        <div th:each="user : ${allUsers}">
+            <p th:text="${user.getEmail()}"></p>
+        </div>
+
+        <h2>Courses</h2>
+        <div th:each="course : ${allCourses}">
+            <p th:text="${course.courseNumber}"></p>
+        </div>
+    </div>
     </body>
 </html>

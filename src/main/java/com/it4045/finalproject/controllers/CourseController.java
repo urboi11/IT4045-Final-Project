@@ -2,6 +2,8 @@ package com.it4045.finalproject.controllers;
 
 import java.util.List;
 
+import com.it4045.finalproject.entities.User;
+import com.it4045.finalproject.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,8 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/courses")
 @AllArgsConstructor
 public class CourseController {
-    private CourseService courseService;
+    private final CourseService courseService;
+    private final UserService userService;
 
     // gets all courses and is the default list view
     @GetMapping
@@ -82,11 +85,9 @@ public class CourseController {
 
     @PostMapping("/{id}/addcomment")
     public String postComment(@RequestParam("commentInput") String comment, @PathVariable Integer id, HttpServletRequest session) {
-        // need to also use the session in here to make sure the user is correct
-        // currently user is set to null so this needs to be changed once UserController
-        // is implemented
+        User user = userService.findByEmail(session.getSession().getAttribute("CurrentUser").toString());
         var course =  courseService.getCourseById(id);
-        courseService.commentOnCourse(comment, null, course);
+        courseService.commentOnCourse(comment, user, course);
         return "redirect:/courses/{id}";
     }
 
