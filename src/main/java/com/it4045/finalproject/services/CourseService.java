@@ -6,6 +6,7 @@ import com.it4045.finalproject.entities.UserComments;
 import com.it4045.finalproject.repository.CourseRepository;
 import com.it4045.finalproject.repository.UserRepository;
 import com.it4045.finalproject.repository.UserCommentRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,13 @@ private final EntityManager entityManager;
     }
 
     @Override
+    @Transactional
+    public void deleteCourse(Integer courseId) {
+        Course course = courseRepository.findById(courseId).orElse(null);
+        courseRepository.delete(course);
+    }
+
+    @Override
     public List<Course> searchCourses(String courseNum) {
         List<Course> allCourses = courseRepository.findAll();
         return allCourses.stream().filter(c -> c.getCourseNumber().equals(courseNum)).toList();
@@ -45,11 +53,11 @@ private final EntityManager entityManager;
     }
 
     @Override
+    @Transactional
     public void commentOnCourse(String comment, User user, Course course) {
         UserComments commentToAdd = UserComments.builder().user(user).course(course).comment(comment).build();
         course.addComment(commentToAdd);
-        courseRepository.save(course);
-
+        userCommentRepository.save(commentToAdd);
     }
 
     @Override

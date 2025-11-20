@@ -6,12 +6,7 @@ import com.it4045.finalproject.entities.User;
 import com.it4045.finalproject.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.it4045.finalproject.entities.Course;
 import com.it4045.finalproject.services.CourseService;
@@ -71,10 +66,14 @@ public class CourseController {
 
     @PostMapping
     public String createCourse(@ModelAttribute Course course, RedirectAttributes redirectAttributes, HttpServletRequest session) {
-        
         courseService.createCourse(course);
-        // redirects to the user admin page
-        return "redirect:/users";
+        return "redirect:/users/profile";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteCourse(@PathVariable Integer id, RedirectAttributes redirectAttributes, HttpServletRequest session) {
+        courseService.deleteCourse(id);
+        return "redirect:/users/profile";
     }
 
     @PostMapping("/{id}/addrating")

@@ -21,6 +21,7 @@ public interface ICourseService {
 
 public void calculateRating (Integer courseId, String ratingInput);
 
+public void deleteCourse(Integer courseId);
 
 
 }
