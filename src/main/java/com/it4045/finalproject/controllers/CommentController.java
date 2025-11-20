@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestController
 @RequestMapping("/comments")
@@ -19,27 +20,27 @@ public class CommentController {
     private CourseService courseService;
 
     @PostMapping("/")
-    public String PostComment(@RequestParam("comment") String comment, @PathVariable Integer id, HttpSession session) {
+    public String PostComment(@RequestParam("comment") String comment, @PathVariable Integer id, HttpSession session, RedirectAttributes redirectAttributes) {
         User postingUser = userService.findByEmail(session.getAttribute("CurrentUser").toString());
         Course targetCourse = courseService.getCourseById(id);
-       if (comment.length() > 0){ // This should validate more things
+        try{
+            courseService.commentOnCourse(comment, postingUser, targetCourse);
+            return "redirect:/courses/{id}";
+        }
+        catch (Exception e){
+            redirectAttributes.addFlashAttribute("CommentErrorMessage", "Error: Comment cannot be empty.");
+            return "redirect:/courses/{id}";
+        }
 
-                courseService.commentOnCourse(comment, postingUser, targetCourse);
-                return "redirect:/courses/{id}";
-       }
-        else return "redirect:/courses/{id}?error=Comment cannot be empty"; //NOT FINAL
 
 
     }
-
+        //NOTE: Auth provides user validation
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> DeleteComment(@PathVariable int id, HttpSession session) {
         //Check if user owns
         User checkUser = userService.findByEmail(session.getAttribute("CurrentUser").toString());
-        UserComments checkComment = null; // Replace with actual comment retrieval logic
-        boolean userOwnsComment = false; // Replace with actual ownership check logic
-
-        if (userOwnsComment) {
+        if (session.getAttribute("CurrentUser") != null ) {
             courseService.deleteComment(id);
             return ResponseEntity.ok().build();
         }
