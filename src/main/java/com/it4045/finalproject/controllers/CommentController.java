@@ -37,8 +37,11 @@ public class CommentController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> DeleteComment(@PathVariable int id, HttpSession session) {
-        //Check if user owns comment
-        boolean userOwnsComment = true; // Replace with actual ownership check logic
+        //Check if user owns
+        User checkUser = userService.findByEmail(session.getAttribute("CurrentUser").toString());
+        UserComments checkComment = null; // Replace with actual comment retrieval logic
+        boolean userOwnsComment = false; // Replace with actual ownership check logic
+
         if (userOwnsComment) {
             courseService.deleteComment(id);
             return ResponseEntity.ok().build();
