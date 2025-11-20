@@ -19,18 +19,15 @@ public class CommentController {
     private CourseService courseService;
 
     @PostMapping("/")
-    public ResponseEntity<UserComments> PostComment(@RequestParam("comment") String comment, @PathVariable Integer id, HttpSession session) {
+    public String PostComment(@RequestParam("comment") String comment, @PathVariable Integer id, HttpSession session) {
         User postingUser = userService.findByEmail(session.getAttribute("CurrentUser").toString());
         Course targetCourse = courseService.getCourseById(id);
        if (comment.length() > 0){ // This should validate more things
-               UserComments createdComment = new UserComments();
-                createdComment.setComment(comment);
-                createdComment.setUser(postingUser);
-                createdComment.setCourse(targetCourse);
+
                 courseService.commentOnCourse(comment, postingUser, targetCourse);
-                return ResponseEntity.ok(createdComment);
+                return "redirect:/courses/{id}";
        }
-        else return ResponseEntity.badRequest().build();
+        else return "redirect:/courses/{id}?error=Comment cannot be empty"; //NOT FINAL
 
 
     }
