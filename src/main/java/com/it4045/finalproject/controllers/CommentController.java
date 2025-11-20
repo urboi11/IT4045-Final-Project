@@ -37,14 +37,14 @@ public class CommentController {
     }
         //NOTE: Auth provides user validation
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> DeleteComment(@PathVariable int id, HttpSession session) {
-        //Check if user owns
-        User checkUser = userService.findByEmail(session.getAttribute("CurrentUser").toString());
+    public String DeleteComment(@PathVariable int id, HttpSession session, RedirectAttributes redirectAttributes) {
         if (session.getAttribute("CurrentUser") != null ) {
             courseService.deleteComment(id);
-            return ResponseEntity.ok().build();
+            return "redirect:/courses/{id}";
         }
-        else return ResponseEntity.status(403).build(); // Forbidden
+        else{
+            redirectAttributes.addFlashAttribute("CommentErrorMessage", "You are not logged in.");
+            return "redirect:/courses/{id}"; }// Forbidden
     }
 
 
