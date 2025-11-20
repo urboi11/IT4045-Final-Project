@@ -20,7 +20,7 @@ public class CommentController {
 
     @PostMapping("/")
     public ResponseEntity<UserComments> PostComment(@RequestParam("comment") String comment, @PathVariable Integer id, HttpSession session) {
-        User postingUser = null; // Replace with actual user retrieval logic once available
+        User postingUser = userService.findByEmail(session.getAttribute("CurrentUser").toString());
         Course targetCourse = courseService.getCourseById(id);
        if (comment.length() > 0){ // This should validate more things
                UserComments createdComment = new UserComments();
