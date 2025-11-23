@@ -8,6 +8,10 @@
     <body>
         <h1 th:text="${isAdmin ? 'Admin Profile' : 'Profile'}"></h1>
 
+        <form th:action="@{/auth/logout}" method="get">
+            <button type="submit">Log Out</button>
+        </form>
+
         <p>Name: <div th:text="${userInfo.firstname + ' ' + userInfo.lastname}"></div></p>
         <p>Email: <div th:text="${userInfo.email}"></div></p>
         <div>

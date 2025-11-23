@@ -84,7 +84,7 @@ public class UserService implements IUserService{
         
             User userReturned = userRepository.findByEmail(signUp.getEmail());
             if(userReturned != null){
-                throw new AccountExistsException("User Already Exists Exception");
+                throw new AccountExistsException("User already exists, did you want to log in?");
             }
 
             User user = new User().builder()
