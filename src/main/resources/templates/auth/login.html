@@ -4,21 +4,14 @@
         <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
         <title>Login Page</title>
     </head>
-    <!--TODO: Get DTO to show here. -->
-    <div th:if="${userName}">
-        <script>
-            alert("Sign Up Successful!")
-        </script>
+    <div th:if="${SignUpSuccess}">
+        <span th:text="${SignUpSuccess}"></span>
     </div>
-    <div th:if="${AlreadyExists}">
-        <script>
-            alert("Account already exists")
-        </script>
+    <div th:if="${LoginError}">
+        <span th:text="${LoginError}"></span>
     </div>
-    <div th:if="${ErrorOccurred}">
-        <script>
-            alert("An Error Has Occurred with the sign in process.")
-        </script>
+    <div th:if="${logoutSuccess}">
+        <span th:text="${logoutSuccess}"></span>
     </div>
     <body>
         <form th:action="@{/auth/login}" method="post" class="form" th:object="${loginRequest}">

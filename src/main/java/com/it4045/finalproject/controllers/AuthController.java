@@ -32,18 +32,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest, HttpServletRequest session) {
-
+    public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest, HttpServletRequest session, RedirectAttributes redirectAttributes, Model model) {
         try{
                 userService.login(loginRequest);
                 session.getSession().setAttribute("CurrentUser", loginRequest.getUsername());
                 return "redirect:/courses";
         }
         catch(AccountDoesNotExistException | IncorrectPasswordException e) {
-            
+            redirectAttributes.addFlashAttribute("LoginError", e.getMessage());
             return "redirect:/auth/login";
         }
-
 
     }
     
@@ -59,10 +57,11 @@ public class AuthController {
        
        try{
             userService.signUp(request);
+            redirectAttributes.addFlashAttribute("SignUpSuccess", "Successfully signed up! Log in to get started.");
             return "redirect:/auth/login";
         }
         catch(AccountExistsException e){
-            redirectAttributes.addFlashAttribute("AlreadyExists", new AccountExistsException("Account already exists"));
+            redirectAttributes.addFlashAttribute("LoginError", e.getMessage());
             return "redirect:/auth/login";    
         }
 
@@ -71,7 +70,7 @@ public class AuthController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest session, RedirectAttributes redirectAttributes) {
         session.getSession().invalidate();
-        redirectAttributes.addFlashAttribute("successMessage", "You have been logged out successfully");
+        redirectAttributes.addFlashAttribute("logoutSuccess", "You have been logged out successfully");
         return "redirect:/auth/login";
     }
     

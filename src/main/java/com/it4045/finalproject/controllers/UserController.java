@@ -4,6 +4,8 @@ package com.it4045.finalproject.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.it4045.finalproject.services.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +39,8 @@ public class UserController {
 
     private final UserCommentRepository commentRepository;
 
+    private final CourseService courseService;
+
     @GetMapping("/profile")
     public String showProfilePage(HttpServletRequest session, Model model) {
         
@@ -51,32 +55,28 @@ public class UserController {
         //Check for Current Role of user
         User user = userService.findByEmail(session.getSession().getAttribute("CurrentUser").toString());     
 
-        model.addAttribute("Email", user.getEmail());
-        model.addAttribute("Name", user.getFirstname() + " " + user.getLastname());
+        model.addAttribute("userInfo", user);
 
         //TODO: Deliver the content of HTML through the api back to the HTML, not a if in the HTML.
         
         List<UserComments> commentsForUser = commentRepository.findByUser(user);
-        if(commentsForUser.size() == 0) {
-            model.addAttribute("comments", "No Comments for this user.");
-        }
+        model.addAttribute("comments", commentsForUser);
         
-        
+        model.addAttribute("isAdmin", false);
         //Admin, TODO: need to add permissions for the comments and courses to be able to delete them.
         if(user.getRole().equals("Admin")){
-            // model.addAttribute("coursesList", )
-            model.addAttribute("course", new Course());
             model.addAttribute("isAdmin", true);
+
+            model.addAttribute("course", new Course());
+            model.addAttribute("allUsers", userService.getUsers());
+            model.addAttribute("allCourses", courseService.getCourses());
         }
 
-        
         return "/users/profile";
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable int id, HttpServletRequest session) {
-        
-
         User user = userService.getUser(id);
         if(user == null){
             return ResponseEntity.notFound().build();
@@ -87,7 +87,6 @@ public class UserController {
 
     @GetMapping("/{id}/comments")
     public ResponseEntity<List<CommentsDto>> getUserComments(@PathVariable int id) {
-        
         // Retrieve all comments made by user
         User user = userService.getUser(id);
         List<UserComments> comments =  userService.getCommentsForUser(user);
