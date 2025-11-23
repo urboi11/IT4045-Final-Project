@@ -66,7 +66,13 @@ public class CourseController {
 
     @PostMapping
     public String createCourse(@ModelAttribute Course course, RedirectAttributes redirectAttributes, HttpServletRequest session) {
-        courseService.createCourse(course);
+        try {
+            courseService.createCourse(course);
+        }
+        catch(Exception e) {
+            redirectAttributes.addFlashAttribute("createError", e.getMessage());
+            return "redirect:/users/profile";
+        }
         return "redirect:/users/profile";
     }
 
