@@ -8,10 +8,11 @@ import com.it4045.finalproject.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RestController
+@Controller
 @RequestMapping("/comments")
 @AllArgsConstructor
 
@@ -19,17 +20,17 @@ public class CommentController {
     private UserService userService;
     private CourseService courseService;
 
-    @PostMapping("/")
-    public String PostComment(@RequestParam("comment") String comment, @PathVariable Integer id, HttpSession session, RedirectAttributes redirectAttributes) {
+    @PostMapping("/{courseId}/addcomment")
+    public String PostComment(@RequestParam("comment") String comment, @PathVariable Integer courseId, HttpSession session, RedirectAttributes redirectAttributes) {
         User postingUser = userService.findByEmail(session.getAttribute("CurrentUser").toString());
-        Course targetCourse = courseService.getCourseById(id);
+        Course targetCourse = courseService.getCourseById(courseId);
         try{
             courseService.commentOnCourse(comment, postingUser, targetCourse);
-            return "redirect:/courses/{id}";
+            return "redirect:/courses/"+courseId;
         }
         catch (Exception e){
             redirectAttributes.addFlashAttribute("CommentErrorMessage", "Error: Comment cannot be empty.");
-            return "redirect:/courses/{id}";
+            return "redirect:/courses/"+courseId;
         }
 
 
@@ -40,11 +41,11 @@ public class CommentController {
     public String DeleteComment(@PathVariable int id, HttpSession session, RedirectAttributes redirectAttributes) {
         if (session.getAttribute("CurrentUser") != null ) {
             courseService.deleteComment(id);
-            return "redirect:/courses/{id}";
+            return "redirect:/courses";
         }
         else{
             redirectAttributes.addFlashAttribute("CommentErrorMessage", "You are not logged in.");
-            return "redirect:/courses/{id}"; }// Forbidden
+            return "redirect:/courses"; }// Forbidden
     }
 
 

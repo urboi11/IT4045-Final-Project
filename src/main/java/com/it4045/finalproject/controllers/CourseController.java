@@ -80,14 +80,6 @@ public class CourseController {
         return  "redirect:/courses/{id}";
     }
 
-    @PostMapping("/{id}/addcomment")
-    public String postComment(@RequestParam("commentInput") String comment, @PathVariable Integer id, HttpServletRequest session) {
-        // need to also use the session in here to make sure the user is correct
-        // currently user is set to null so this needs to be changed once UserController
-        // is implemented
-        var course =  courseService.getCourseById(id);
-        courseService.commentOnCourse(comment, null, course);
-        return "redirect:/courses/{id}";
-    }
+
 
 }
