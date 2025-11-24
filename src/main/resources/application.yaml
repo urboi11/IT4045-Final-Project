@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/it4045local?createDatabaseIfNotExist=true
-    username: root
-    password: password
+      url: ${MYSQL_URL}
+      username: ${MYSQL_USERNAME}
+      password: ${MYSQL_PASSWORD}
   mvc:
     hiddenmethod:
       filter:
