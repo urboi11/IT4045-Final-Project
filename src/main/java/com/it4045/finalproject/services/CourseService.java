@@ -23,7 +23,6 @@ public class CourseService implements ICourseService{
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
     private final UserCommentRepository userCommentRepository;
-    private final EntityManager entityManager;
 
     @Override
     public Course createCourse(Course course) {
@@ -87,15 +86,6 @@ public class CourseService implements ICourseService{
         UserComments commentToAdd = UserComments.builder().user(user).course(course).comment(comment).build();
         course.addComment(commentToAdd);
         userCommentRepository.save(commentToAdd);
-    }
-
-    @Override
-    public void deleteComment(int userCommentId) {
-        UserComments targetComment = entityManager.find(UserComments.class, userCommentId);
-        Course targetCourse = targetComment.getCourse();
-        userCommentRepository.deleteById(userCommentId);
-        targetCourse.setRating_count(targetCourse.getRating_count()-1);
-
     }
 
     @Override
