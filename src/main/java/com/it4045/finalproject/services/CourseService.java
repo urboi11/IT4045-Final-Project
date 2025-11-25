@@ -5,6 +5,7 @@ import com.it4045.finalproject.entities.User;
 import com.it4045.finalproject.entities.UserComments;
 import com.it4045.finalproject.exceptions.CourseNameExistsException;
 import com.it4045.finalproject.exceptions.CourseNumberExistsException;
+import com.it4045.finalproject.exceptions.EmptyCommentException;
 import com.it4045.finalproject.repository.CourseRepository;
 import com.it4045.finalproject.repository.UserRepository;
 import com.it4045.finalproject.repository.UserCommentRepository;
@@ -19,10 +20,10 @@ import java.util.List;
 @Data
 @Service
 public class CourseService implements ICourseService{
-private final CourseRepository courseRepository;
-private final UserRepository userRepository;
-private final UserCommentRepository userCommentRepository;
-private final EntityManager entityManager;
+    private final CourseRepository courseRepository;
+    private final UserRepository userRepository;
+    private final UserCommentRepository userCommentRepository;
+    private final EntityManager entityManager;
 
     @Override
     public Course createCourse(Course course) {
@@ -81,6 +82,8 @@ private final EntityManager entityManager;
     @Override
     @Transactional
     public void commentOnCourse(String comment, User user, Course course) {
+        if (comment.length() == 0)
+            throw new EmptyCommentException("Comment cannot be empty");
         UserComments commentToAdd = UserComments.builder().user(user).course(course).comment(comment).build();
         course.addComment(commentToAdd);
         userCommentRepository.save(commentToAdd);

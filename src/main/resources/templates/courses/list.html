@@ -25,6 +25,9 @@
 
     <hr>
 
+   <div th:if="${CommentErrorMessage}" class="alert alert-danger" role="alert">
+        <p th:text="${CommentErrorMessage}"></p>
+   </div>
     <div class="course-list">
         <h3>Course Results</h3>
         <ul>
@@ -51,13 +54,14 @@
             </form>
             <p th:text="${course.description}"></p>
             <h4>Course Comments</h4>
-            <form th:action="'/courses/' + ${course.courseId} + '/addcomment'" method="post">
-                <textarea id="commentInput" name="commentInput" placeholder="Enter your comment"></textarea>
+            <form th:action="@{'/comments/' + ${course.courseId} + '/addcomment'}" method="post">
+                <textarea id="commentInput" name="comment" placeholder="Enter your comment"></textarea>
                 <button type="submit">Post Comment</button>
             </form>
             <ul>
                 <li th:each="comment : ${course.userComments}">
                     <p th:text="${comment.comment}"></p>
+
                 </li>
             </ul>
 

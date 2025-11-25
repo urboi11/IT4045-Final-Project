@@ -18,6 +18,10 @@
             <h2>Your Comments</h2>
             <p th:if="${comments.size() == 0}">You have no comments.</p>
             <div th:each="comment : ${comments}">
+                <form th:action="@{'/comments/' + ${comment.userCommentId}}" method="post">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit"><i class="glyphicon glyphicon-trash"></i></button>
+                </form>
                 <p th:text="${comment.comment}"></p>
             </div>
         </div>
