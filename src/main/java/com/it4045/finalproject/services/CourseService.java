@@ -3,7 +3,6 @@ package com.it4045.finalproject.services;
 import com.it4045.finalproject.entities.Course;
 import com.it4045.finalproject.entities.User;
 import com.it4045.finalproject.entities.UserComments;
-import com.it4045.finalproject.exceptions.EmptyCommentException;
 import com.it4045.finalproject.repository.CourseRepository;
 import com.it4045.finalproject.repository.UserRepository;
 import com.it4045.finalproject.repository.UserCommentRepository;
@@ -58,12 +57,6 @@ private final EntityManager entityManager;
         //int targetCourseID = course.getCourseId();
         //Course targetCourse = entityManager.find(Course.class, targetCourseID);
         //UserComments commentToAdd = new UserComments(0, user, targetCourse, comment);
-
-        //Validate that comment actually has a body
-
-        if (comment.length() == 0)
-            throw new EmptyCommentException("Comment cannot be empty");
-
         UserComments commentToAdd = UserComments.builder().user(user).course(course).comment(comment).build();
 
         course.addComment(commentToAdd);

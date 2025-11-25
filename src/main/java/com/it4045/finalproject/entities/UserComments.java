@@ -17,12 +17,12 @@ public class UserComments {
     private Integer userCommentId;
 
 
-    @ManyToOne//(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userid")
     @ToString.Exclude
     private User user;
 
-    @ManyToOne//(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="course_id")
     @ToString.Exclude
     private Course course;

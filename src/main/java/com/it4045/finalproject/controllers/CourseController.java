@@ -2,14 +2,11 @@ package com.it4045.finalproject.controllers;
 
 import java.util.List;
 
+import com.it4045.finalproject.entities.User;
+import com.it4045.finalproject.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.it4045.finalproject.entities.Course;
 import com.it4045.finalproject.services.CourseService;
@@ -22,7 +19,8 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/courses")
 @AllArgsConstructor
 public class CourseController {
-    private CourseService courseService;
+    private final CourseService courseService;
+    private final UserService userService;
 
     // gets all courses and is the default list view
     @GetMapping
@@ -68,10 +66,20 @@ public class CourseController {
 
     @PostMapping
     public String createCourse(@ModelAttribute Course course, RedirectAttributes redirectAttributes, HttpServletRequest session) {
-        
-        courseService.createCourse(course);
-        // redirects to the user admin page
-        return "redirect:/users";
+        try {
+            courseService.createCourse(course);
+        }
+        catch(Exception e) {
+            redirectAttributes.addFlashAttribute("createError", e.getMessage());
+            return "redirect:/users/profile";
+        }
+        return "redirect:/users/profile";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteCourse(@PathVariable Integer id, RedirectAttributes redirectAttributes, HttpServletRequest session) {
+        courseService.deleteCourse(id);
+        return "redirect:/users/profile";
     }
 
     @PostMapping("/{id}/addrating")
@@ -80,6 +88,12 @@ public class CourseController {
         return  "redirect:/courses/{id}";
     }
 
-
+    @PostMapping("/{id}/addcomment")
+    public String postComment(@RequestParam("commentInput") String comment, @PathVariable Integer id, HttpServletRequest session) {
+        User user = userService.findByEmail(session.getSession().getAttribute("CurrentUser").toString());
+        var course =  courseService.getCourseById(id);
+        courseService.commentOnCourse(comment, user, course);
+        return "redirect:/courses/{id}";
+    }
 
 }
