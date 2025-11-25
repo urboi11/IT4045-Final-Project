@@ -88,12 +88,5 @@ public class CourseController {
         return  "redirect:/courses/{id}";
     }
 
-    @PostMapping("/{id}/addcomment")
-    public String postComment(@RequestParam("commentInput") String comment, @PathVariable Integer id, HttpServletRequest session) {
-        User user = userService.findByEmail(session.getSession().getAttribute("CurrentUser").toString());
-        var course =  courseService.getCourseById(id);
-        courseService.commentOnCourse(comment, user, course);
-        return "redirect:/courses/{id}";
-    }
 
 }
