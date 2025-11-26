@@ -9,7 +9,7 @@
 <nav>
     <ul style="list-style: none; display: flex; gap: 20px; padding: 10px; background-color: #f0f0f0;">
         <li><a th:href="@{/courses}" style="text-decoration: none;">Courses</a></li>
-        <li><a th:href="@{/profile}" style="text-decoration: none;">Profile</a></li>
+        <li><a th:href="@{/users/profile}" style="text-decoration: none;">Profile</a></li>
     </ul>
 </nav>
 
@@ -25,9 +25,6 @@
 
     <hr>
 
-   <div th:if="${CommentErrorMessage}" class="alert alert-danger" role="alert">
-        <p th:text="${CommentErrorMessage}"></p>
-   </div>
     <div class="course-list">
         <h3>Course Results</h3>
         <ul>
@@ -54,6 +51,9 @@
             </form>
             <p th:text="${course.description}"></p>
             <h4>Course Comments</h4>
+            <div th:if="${CommentErrorMessage}" class="alert alert-danger" role="alert">
+                <p th:text="${CommentErrorMessage}"></p>
+            </div>
             <form th:action="@{'/comments/' + ${course.courseId} + '/addcomment'}" method="post">
                 <textarea id="commentInput" name="comment" placeholder="Enter your comment"></textarea>
                 <button type="submit">Post Comment</button>

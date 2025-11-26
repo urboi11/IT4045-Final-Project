@@ -23,33 +23,22 @@ import com.it4045.finalproject.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @AllArgsConstructor
 @Controller
 @Slf4j
 @RequestMapping("/users")
 public class UserController {
-
-    //TODO: I need to implement a checker for status of user, so someone cannot access the endpoint without being authenticated. 
-
-
     private final UserService userService;
-
     private final UserAndCommentsMapper mapper;
-
     private final UserCommentRepository commentRepository;
-
     private final CourseService courseService;
 
     @GetMapping("/profile")
-    public String showProfilePage(HttpServletRequest session, Model model) {
-        
-        try{
-            if(session.getSession().getAttribute("CurrentUser").equals(null)) {
-                return "redirect:/auth/login";
-            }
-        }
-        catch(Exception e){
+    public String showProfilePage(HttpServletRequest session, Model model, RedirectAttributes redirectAttributes) {
+        if(session.getSession().getAttribute("CurrentUser") == null) {
+            redirectAttributes.addFlashAttribute("LoginError", "You need to be logged in to view that page.");
             return "redirect:/auth/login";
         }
         //Check for Current Role of user
@@ -57,13 +46,10 @@ public class UserController {
 
         model.addAttribute("userInfo", user);
 
-        //TODO: Deliver the content of HTML through the api back to the HTML, not a if in the HTML.
-        
         List<UserComments> commentsForUser = commentRepository.findByUser(user);
         model.addAttribute("comments", commentsForUser);
         
         model.addAttribute("isAdmin", false);
-        //Admin, TODO: need to add permissions for the comments and courses to be able to delete them.
         if(user.getRole().equals("Admin")){
             model.addAttribute("isAdmin", true);
 
@@ -82,7 +68,7 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(mapper.UserDto(user));
-        
+
     }
 
     @GetMapping("/{id}/comments")
