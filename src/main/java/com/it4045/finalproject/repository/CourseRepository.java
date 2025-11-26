@@ -11,4 +11,5 @@ import java.util.List;
 public interface CourseRepository extends JpaRepository<Course, Integer>{
     List<Course> findByUniversityAndCourseName(String university, String courseName);
     List<Course> findByUniversityAndCourseNumber(String university, String courseNumber);
+    List<Course> findByCourseNumber(String courseNumber);
 }

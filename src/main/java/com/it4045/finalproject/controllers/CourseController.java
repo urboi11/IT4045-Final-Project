@@ -83,8 +83,13 @@ public class CourseController {
     }
 
     @PostMapping("/{id}/addrating")
-    public String addRating(@RequestParam("rating") String rating, @PathVariable Integer id, HttpServletRequest session) {
-        courseService.calculateRating(id, rating);
+    public String addRating(@RequestParam("rating") int rating, @PathVariable Integer id, HttpServletRequest session) {
+        try {
+            courseService.calculateRating(id, rating);
+        }
+        catch(Exception e) {
+            return  "redirect:/courses/{id}";
+        }
         return  "redirect:/courses/{id}";
     }
 

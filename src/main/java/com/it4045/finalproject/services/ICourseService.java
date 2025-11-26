@@ -17,7 +17,7 @@ public interface ICourseService {
 
  public void commentOnCourse (String comment, User user, Course course);
 
-public void calculateRating (Integer courseId, String ratingInput);
+public void calculateRating (Integer courseId, int rating);
 
 public void deleteCourse(Integer courseId);
 
