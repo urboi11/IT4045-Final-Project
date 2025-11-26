@@ -9,6 +9,7 @@ import com.it4045.finalproject.exceptions.EmptyCommentException;
 import com.it4045.finalproject.repository.CourseRepository;
 import com.it4045.finalproject.repository.UserRepository;
 import com.it4045.finalproject.repository.UserCommentRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +24,6 @@ public class CourseService implements ICourseService{
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
     private final UserCommentRepository userCommentRepository;
-    private final EntityManager entityManager;
 
     @Override
     public Course createCourse(Course course) {
@@ -65,8 +65,7 @@ public class CourseService implements ICourseService{
 
     @Override
     public List<Course> searchCourses(String courseNum) {
-        List<Course> allCourses = courseRepository.findAll();
-        return allCourses.stream().filter(c -> c.getCourseNumber().equals(courseNum)).toList();
+        return courseRepository.findByCourseNumber(courseNum);
     }
 
     @Override
@@ -90,18 +89,9 @@ public class CourseService implements ICourseService{
     }
 
     @Override
-    public void deleteComment(int userCommentId) {
-        UserComments targetComment = entityManager.find(UserComments.class, userCommentId);
-        Course targetCourse = targetComment.getCourse();
-        userCommentRepository.deleteById(userCommentId);
-        targetCourse.setRating_count(targetCourse.getRating_count()-1);
-
-    }
-
-    @Override
-    public void calculateRating(Integer courseId, String ratingInput) {
-        var course = courseRepository.findById(courseId).orElse(null);
-        int rating = Integer.parseInt(ratingInput);
+    public void calculateRating(Integer courseId, int rating) {
+        var course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseId));
 
         double currentRating = course.getCourseRating();
         int ratingCount = course.getRating_count();
@@ -110,8 +100,9 @@ public class CourseService implements ICourseService{
         if (currentRating != 0) {
             newRating = ((currentRating * ratingCount) + rating) / (ratingCount + 1);
         }
+        newRating = (double) Math.round(newRating * 100) / 100;
         course.setCourseRating(newRating);
-        course.setRating_count(ratingCount + 1); // increments rating_count since we get a new rating
+        course.setRating_count(ratingCount + 1);
         courseRepository.save(course);
     }
 }

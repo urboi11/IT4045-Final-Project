@@ -24,8 +24,11 @@ public class CourseController {
 
     // gets all courses and is the default list view
     @GetMapping
-    public String getAllCourses(Model model, HttpServletRequest session) {
-
+    public String getAllCourses(Model model, HttpServletRequest session, RedirectAttributes redirectAttributes) {
+        if(session.getSession().getAttribute("CurrentUser") == null) {
+            redirectAttributes.addFlashAttribute("LoginError", "You need to be logged in to view that page.");
+            return "redirect:/auth/login";
+        }
         List<Course> courses = courseService.getCourses();
         model.addAttribute("courses", courses);
         return "courses/list";
@@ -83,8 +86,13 @@ public class CourseController {
     }
 
     @PostMapping("/{id}/addrating")
-    public String addRating(@RequestParam("rating") String rating, @PathVariable Integer id, HttpServletRequest session) {
-        courseService.calculateRating(id, rating);
+    public String addRating(@RequestParam("rating") int rating, @PathVariable Integer id, HttpServletRequest session) {
+        try {
+            courseService.calculateRating(id, rating);
+        }
+        catch(Exception e) {
+            return  "redirect:/courses/{id}";
+        }
         return  "redirect:/courses/{id}";
     }
 
