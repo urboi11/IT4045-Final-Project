@@ -16,6 +16,17 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 
+/**
+ * Service class for managing course-related business logic.
+ * Handles course creation, retrieval, rating calculations, and comment management.
+ *
+ * @see ICourseService
+ * @see CourseRepository
+ * JavaDoc proposed by Gabby Herlocher and edited by Ethan Goudy
+ *
+ * * @author Enterprise App Development Final Project Group
+ */
+
 @AllArgsConstructor
 @Data
 @Service
@@ -25,6 +36,20 @@ public class CourseService implements ICourseService{
     private final UserCommentRepository userCommentRepository;
     private final EntityManager entityManager;
 
+    /**
+     * Creates and persists a new course to the database.
+     *
+     * @param course the course entity to create
+     * @return the saved course entity with generated ID
+     *
+     * @throws IllegalArgumentException if any required course fields are missing
+     * @throws CourseNameExistsException if a course with the same name already exists with the target name/host
+     * @throws CourseNumberExistsException if a course with the same number already exists with the target number
+     * @throws IllegalArgumentException if required parameters are blank
+     * JavaDoc proposed by Gabby Herlocher and edited by Ethan Goudy
+     *
+     * @author Enterprise App Development Final Project Group
+     */
     @Override
     public Course createCourse(Course course) {
         if (course.getCourseNumber().isBlank()) {
@@ -56,6 +81,7 @@ public class CourseService implements ICourseService{
         return course;
     }
 
+
     @Override
     @Transactional
     public void deleteCourse(Integer courseId) {
@@ -69,11 +95,30 @@ public class CourseService implements ICourseService{
         return allCourses.stream().filter(c -> c.getCourseNumber().equals(courseNum)).toList();
     }
 
+    /**
+     * Retrieves all courses from the database.
+     *
+     * JavaDoc proposed by Gabby Herlocher and edited by Ethan Goudy
+     *
+     * @return list of all courses
+     *
+     * @author Enterprise App Development Final Project Group
+     */
     @Override
     public List<Course> getCourses() {
         return courseRepository.findAll();
     }
 
+    /**
+     * Retrieves a specific course by its ID.
+     *
+     * JavaDoc proposed by Gabby Herlocher and edited by Ethan Goudy
+     *
+     * @param id the course ID to look up
+     * @return the course entity with the specified ID
+     * @throws IllegalArgumentException if no course exists with the given ID
+     * @author Enterprise App Development Final Project Group
+     */
     @Override
     public Course getCourseById(Integer id) {
         return courseRepository.findById(id).orElse(null);
