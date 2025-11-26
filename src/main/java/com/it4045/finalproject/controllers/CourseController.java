@@ -24,8 +24,11 @@ public class CourseController {
 
     // gets all courses and is the default list view
     @GetMapping
-    public String getAllCourses(Model model, HttpServletRequest session) {
-
+    public String getAllCourses(Model model, HttpServletRequest session, RedirectAttributes redirectAttributes) {
+        if(session.getSession().getAttribute("CurrentUser") == null) {
+            redirectAttributes.addFlashAttribute("LoginError", "You need to be logged in to view that page.");
+            return "redirect:/auth/login";
+        }
         List<Course> courses = courseService.getCourses();
         model.addAttribute("courses", courses);
         return "courses/list";
