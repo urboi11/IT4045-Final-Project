@@ -82,6 +82,15 @@ public class CourseService implements ICourseService{
     }
 
 
+    /**
+     * This method deletes a course from the database, given a target ID as an integer.
+     *
+     * JavaDoc by Ethan Goudy
+     *
+     * @param courseId the ID of the course to delete
+     *
+     * @author Enterprise App Development Final Project Group
+     */
     @Override
     @Transactional
     public void deleteCourse(Integer courseId) {
@@ -89,6 +98,14 @@ public class CourseService implements ICourseService{
         courseRepository.delete(course);
     }
 
+    /**
+     * Searches for courses by course number (e.g., "IT4045C").
+     *
+     * JavaDoc proposed by Gabby Herlocher and edited by Ethan Goudy
+     *
+     * @param courseNum the course number to search for
+     * @return list of courses matching the course number, empty list if none found
+     */
     @Override
     public List<Course> searchCourses(String courseNum) {
         return courseRepository.findByCourseNumber(courseNum);
@@ -123,6 +140,19 @@ public class CourseService implements ICourseService{
         return courseRepository.findById(id).orElse(null);
     }
 
+    /**
+     * Adds a user comment to a specific course.
+     *
+     * JavaDoc proposed by Gabby Herlocher and edited by Ethan Goudy
+     *
+     * @param comment the comment text to add
+     * @param user the user posting the comment
+     * @param course the course being commented on
+     *
+     * @throws EmptyCommentException if the comment has no text
+     *
+     * @author Enterprise App Development Final Project Group
+     */
     @Override
     @Transactional
     public void commentOnCourse(String comment, User user, Course course) {
@@ -133,6 +163,19 @@ public class CourseService implements ICourseService{
         userCommentRepository.save(commentToAdd);
     }
 
+    /**
+     * Calculates and updates a course's rating based on new user input.
+     * Computes the average rating by incorporating the new rating with existing ratings.
+     *
+     * JavaDoc proposed by Gabby Herlocher and edited by Ethan Goudy
+     *
+     * @param courseId the ID of the course to rate
+     * @param rating the rating value as a string (must be 1-5)
+     * @throws IllegalArgumentException if the course is not found, rating format is invalid,
+     *         or rating is outside the 1-5 range
+     *
+     * @author Enterprise App Development Final Project Group
+     */
     @Override
     public void calculateRating(Integer courseId, int rating) {
         var course = courseRepository.findById(courseId)
