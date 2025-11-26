@@ -61,28 +61,9 @@ public class UserController {
         return "/users/profile";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUser(@PathVariable int id, HttpServletRequest session) {
-        User user = userService.getUser(id);
-        if(user == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(mapper.UserDto(user));
 
-    }
 
-    @GetMapping("/{id}/comments")
-    public ResponseEntity<List<CommentsDto>> getUserComments(@PathVariable int id) {
-        // Retrieve all comments made by user
-        User user = userService.getUser(id);
-        List<UserComments> comments =  userService.getCommentsForUser(user);
-        List<CommentsDto> commentsDto = new ArrayList();
 
-        for(UserComments comment : comments) {
-            commentsDto.add(mapper.CommentsDto(comment));
-        }
-        return ResponseEntity.ok(commentsDto);
-    }
 
 
 }
