@@ -3,32 +3,35 @@
     <head>
         <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
         <title>Profile Page</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    </head>
-    <body>
-        <h1 th:text="${isAdmin ? 'Admin Profile' : 'Profile'}"></h1>
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+     </head>
+     <body>
+     <div class="left-panel">
 
-        <form th:action="@{/auth/logout}" method="get">
-            <button type="submit">Log Out</button>
-        </form>
+     <h1 th:text="${isAdmin ? 'Admin Profile' : 'Profile'}"></h1>
 
-        <p>Name: <div th:text="${userInfo.firstname + ' ' + userInfo.lastname}"></div></p>
-        <p>Email: <div th:text="${userInfo.email}"></div></p>
-        <div>
-            <h2>Your Comments</h2>
-            <p th:if="${comments.size() == 0}">You have no comments.</p>
-            <div th:each="comment : ${comments}">
-                <form th:action="@{'/comments/' + ${comment.userCommentId}}" method="post">
-                    <input type="hidden" name="_method" value="delete"/>
-                    <button type="submit"><i class="glyphicon glyphicon-trash"></i></button>
-                </form>
-                <p th:text="${comment.comment}"></p>
-            </div>
-        </div>
+         <form th:action="@{/auth/logout}" method="get">
+             <button type="submit">Log Out</button>
+         </form>
 
-        <div th:if="${isAdmin}">
-            <h2>Add a New Course</h2>
-            <!-- form to create a course -->
+         <p>Name: <div th:text="${userInfo.firstname + ' ' + userInfo.lastname}"></div></p>
+         <p>Email: <div th:text="${userInfo.email}"></div></p>
+         <div>
+             <h2>Your Comments</h2>
+             <p th:if="${comments.size() == 0}">You have no comments.</p>
+             <div th:each="comment : ${comments}">
+                 <form th:action="@{'/comments/' + ${comment.userCommentId}}" method="post">
+                     <input type="hidden" name="_method" value="delete"/>
+                     <button type="submit"><i class="glyphicon glyphicon-trash"></i></button>
+                 </form>
+                 <p th:text="${comment.comment}"></p>
+             </div>
+         </div>
+
+
+         <div th:if="${isAdmin}">
+             <h2>Add a New Course</h2>
+             <!-- form to create a course -->
             <form th:action="@{/courses}"
                 method="post"
                 th:object="${course}">
@@ -93,8 +96,10 @@
             </div>
         </form>
     </div>
-    <div th:if="${isAdmin}">
-        <h2>Users Registered</h2>
+     </div>
+
+     <div class="right-panel" th:if="${isAdmin}">
+     <h2>Users Registered</h2>
         <div th:each="user : ${allUsers}">
             <p th:text="${user.getEmail()}"></p>
         </div>

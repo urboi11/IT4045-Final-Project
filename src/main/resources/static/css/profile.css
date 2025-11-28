@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fdfdfd;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.left-panel {
+    width: 45%;
+    padding-right: 20px;
+    border-right: 1px solid #ccc;
+}
+
+.right-panel {
+    width: 50%;
+    padding-left: 20px;
+}
+
+h1, h2 {
+    color: #333;
+    margin-bottom: 16px;
+}
+
+p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #444;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    background-color: #e0e0e0;
+    border: 1px solid #ccc;
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #f9c9a9;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    margin-top: 8px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #f7b88f;
+}
+
+button i.glyphicon-trash {
+    color: #d9534f;
+    font-size: 16px;
+}
+
+.comment-block {
+    margin-bottom: 12px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+}
