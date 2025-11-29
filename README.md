@@ -11,7 +11,7 @@ University students want to go into new experiences feeling prepared. Currently,
 
 ### Goals and Objectives
 - To allow students to provide ratings and feedback for courses.
-- To provide a searchable catalog of university courses based on course ID.
+- To provide a searchable catalog of university courses based on course number (i.e. IT4045C).
 - To enable students to see comments from previous students about a course.
 
 ### Functional Requirements
@@ -26,7 +26,7 @@ University students want to go into new experiences feeling prepared. Currently,
 - Then they are added to the database and redirected to the website
 #### Scenario: User searches for an existing course
 - Given a user is on the home page
-- When user searches in the search bar with a course id
+- When user searches in the search bar with a course number
 - Then a list of possible matches is returned
 #### Scenario: User comments on a course
 - Given a user has searched and found a course
@@ -45,7 +45,7 @@ University students want to go into new experiences feeling prepared. Currently,
 2. Once logged in, the user will see a screen where they can search for classes. The default page(no search) will prompt them to search.
 ![Search Page](media/searchPanel.png)
 
-3. Once they serach, some course results will pop up and they can see details about the course as well as previous comments by other students. The user can input a comment on their own about the course as well as provide a rating. 
+3. Once they search, some course results will pop up, and they can see details about the course as well as previous comments by other students. The user can input a comment on their own about the course as well as provide a rating. 
 ![CourseInteraction](media/courseInteraction.png)
 
 4. If the course number searched doesn't return any results, this is what the user will see.
@@ -62,13 +62,15 @@ University students want to go into new experiences feeling prepared. Currently,
 [Link to original LucidChart Class Diagram](https://lucid.app/lucidchart/da452509-1147-4ec6-976c-e8bc58310a99/edit?viewport_loc=-198%2C-652%2C5115%2C2260%2C0_0&invitationId=inv_c39cdfe5-c0b1-4025-80d1-99e03c792445)
 
 #### com.it4045.finalproject.controllers
-WebController: handles the webpages
+HomeController: routes the starting webpage
 UserController: endpoint for interacting with courses
 CourseController: endpoint for interacting with users
+CommentController: endpoint for interacting with comments
+AuthController: endpoint for authenticating users (i.e. logging in)
 
 #### com.it4045.finalproject.entities
 All entities will use Lombok for getters and setters and other boilerplate methods so they have been excluded from the diagram and description.
-User: stores information for the users. isAdmin is a Boolean field which can be set to define a user as an admin and has access to the admin settings page.
+User: stores information for the users. Field "role" can either be "User" or "Admin"; this determines the profile page that the user is able to see.
 Course: stores information for the courses
 UserComments: acts as a crossreference table for User and Course.
 
@@ -79,37 +81,35 @@ IUserService: interface for user logic. All methods are signature only as is the
 - getUserName(): getting the user name
 - getUsers(): getting a list of users (for the admin page)
 - getCommentsForUser(): getting all the comments a user has made (for the profile page)
+- getUser(): get a user by ID
+- deleteComment(): deletes comment for a user
+- login(): logs a user in and returns the DTO
+- signUp(): registers a user with RateMyCourse
+- findByEmail(): finds a user by email for authentication purposes
 
 CourseService: implements ICourseService
 ICourseService: interface for course logic. All methods are signature only as is the case for interfaces. 
 Implemented by CourseService.
 - createCourse(): creating a course
-- searchCourse(): gets a course based on the course ID
+- searchCourses(): gets a course based on the course number
+- getCourses(): gets all courses
+- getCourseById(): gets one course by an ID
 - commentOnCourse(): creates a comment based on user input
-- deleteComment(): deletes a comment
-- getCommentsForCourse(): gets a list of all the comments associated with a course
-- getRating(): gets the rating for a given course
 - calculateRating(): calculates the new rating based on user input for rating
+- deleteCourse(): deletes a course by ID
 
 #### com.it4045.finalproject.data
-UserData: implements IUserData
-IUserData: interface for interacting with the database, specifically the user table. All methods are signature only as is the case for interfaces.
-- createUser(): creates a user in the database
-- getUser(): queries the database for a specific user
-- getUsers(): gets all the users from the database
+Each repository implements JPARepository, providing a set of base operations against the database.
+UserRepository: implements JPARepository
+- findByEmail(): gets a user from the database by email
 
-CourseData: implements ICourseData
-ICourseData: interface for interacting with the database, specifically the course table. All methods are signature only as is the case for interfaces.
-- createCourse(): creates a course in the database
-- getCourses(): gets a list of all the courses
-- getCourse(): gets a specific course based on ID
-- updateRating(): updates the rating in the database
+CourseRepository: implements JPARepository
+- findByUniversityAndCourseName(): finds a course by university and course name to check for duplication
+- findByUniversityAndCourseNumber(): finds a course by university and course number to check for duplication
+- findByCourseNumber(): finds a course by the number (i.e. IT4045C)
 
-UserCommentData: implements IUserCommentData
-IUserCommentData: interface for interacting with the database, specifically the usercomment table. All methods are signature only as is the case for interfaces.
-- getUserComments(): gets a list of comments for a specific user from database
-- getCourseComments(): gets a list of comments for a specific course from database
-- deleteUserComment(): deletes a comment based on ID from database
+UserCommentRepository: implements JPARepository
+- findByUser(): finds a user from the database by User entity
 
 ### Architecture and Components of Application
 ![Architecture and Components](/media/architecture.png)
@@ -133,7 +133,6 @@ To set up the project, you will need to ensure you have system environment varia
  - MYSQL_PASSWORD: your password to the MYSQL root account
  - MYSQL_URL: jdbc:mysql://localhost:3306/finalproject?createDatabaseIfNotExist = true
  - MYSQL_USERNAME: root, or the username for your MYSQL account
-
 
 ### Code Review
 Here is a video explaining some of the endpoints we have covered in our project. 
