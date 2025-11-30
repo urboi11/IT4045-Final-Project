@@ -13,6 +13,13 @@ import com.it4045.finalproject.services.CourseService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
+/**
+ * Controller for handling course-related interactions, such as listing posted courses, searching for courses,
+ * adding ratings, and creating or deleting courses as an administrator.
+ * Uses service methods from CourseService  to interact with the database.
+ * @see CourseService
+ * @author Enterprise App Development Final Project Group
+ */
 
 
 @Controller
@@ -20,7 +27,6 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CourseController {
     private final CourseService courseService;
-    private final UserService userService;
 
     // gets all courses and is the default list view
     @GetMapping
