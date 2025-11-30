@@ -3,6 +3,8 @@
     <head>
         <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
         <title>Sign Up Page</title>
+        <link rel="stylesheet" th:href="@{/css/signup.css}">
+
     </head>
     <body>
         <form th:action="@{/auth/signup}" method="post" class="form" th:object="${signUpRequest}">
