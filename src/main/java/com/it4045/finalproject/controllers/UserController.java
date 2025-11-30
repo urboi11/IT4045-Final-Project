@@ -22,6 +22,7 @@ import com.it4045.finalproject.repository.UserCommentRepository;
 import com.it4045.finalproject.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 

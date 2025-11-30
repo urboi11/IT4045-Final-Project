@@ -14,17 +14,18 @@ import com.it4045.finalproject.entities.User;
 import com.it4045.finalproject.repository.UserCommentRepository;
 import com.it4045.finalproject.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @Service
 public class UserService implements IUserService{
 
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private UserCommentRepository userCommentRepository;
+    private final UserCommentRepository userCommentRepository;
 
-    private UserAndCommentsMapper userMapper;
+    private final UserAndCommentsMapper userMapper;
     
     @Override
     public User createUser(User user) {
