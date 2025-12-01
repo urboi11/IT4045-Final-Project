@@ -6,6 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * A repository interface for managing Course entities in the database.
+ * Extends JpaRepository to provide CRUD operations and custom query methods.
+ * @see Course
+ * @author Enterprise App Development Final Project Group
+ */
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Integer>{
