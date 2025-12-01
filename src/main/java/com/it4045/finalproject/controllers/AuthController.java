@@ -86,9 +86,9 @@ public class AuthController {
     /**
      * Processes a SignUpRequest DTO submitted from the signup page, using the SignUp service method
      * to validate and create a new user account. Catches exceptions due to duplicated user credentials.
-     * @param request the DTO containing the proposed user informaton
+     * @param request the SignUpRequest DTO containing the proposed user information
      * @param model The model the DTO is attached to
-     * @param redirectAttributes Usecd to attach status messages to the redirect
+     * @param redirectAttributes Used to attach status messages to the redirect
      * @throws AccountExistsException when a proposed user's information is checked
      * against existing records and found to be a duplicate of an existing user
      * @return a redirect to the login page with a status message attached via flash attribute

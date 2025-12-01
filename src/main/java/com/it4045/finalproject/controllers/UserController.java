@@ -25,6 +25,16 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * A controller for handling the user profile.
+ * Uses methods from UserService, UserCommentRepos to interact with the database.
+ *
+ * @see UserService
+ * @see UserAndCommentsMapper
+ * @see UserCommentRepository
+ * @see CourseService
+ * @author Enterprise App Development Final Project Group
+ */
 @AllArgsConstructor
 @Controller
 @Slf4j
@@ -35,6 +45,14 @@ public class UserController {
     private final UserCommentRepository commentRepository;
     private final CourseService courseService;
 
+    /**
+     * Displays the profile page for the current user.
+     * @param session The HTTP session containing information about the current user.
+     * @param model The target model to attach information to.
+     * @param redirectAttributes Used to attach messages to redirects.
+     * @return A redirect to the profile page if a user is logged in, or to the login page if not.
+     * @author Enterprise App Development Final Project Group
+     */
     @GetMapping("/profile")
     public String showProfilePage(HttpServletRequest session, Model model, RedirectAttributes redirectAttributes) {
         if(session.getSession().getAttribute("CurrentUser") == null) {

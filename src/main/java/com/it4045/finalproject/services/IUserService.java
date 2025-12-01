@@ -9,6 +9,13 @@ import com.it4045.finalproject.dtos.UserDto;
 import com.it4045.finalproject.entities.User;
 import com.it4045.finalproject.entities.UserComments;
 
+/**
+ * A service interface defining methods for managing User entities and their related operations.
+ * @see User
+ * @see UserComments
+ * @see com.it4045.finalproject.controllers.UserController
+ * @author Enterprise Application Development Final Project Group
+ */
 public interface IUserService {
     public User createUser(User user);
 

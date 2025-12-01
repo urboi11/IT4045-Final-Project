@@ -33,7 +33,9 @@ public class CourseController {
 
     /**
      * Retrieves a list of all currently posted courses to be listed on the page.
-     * Checks if a user is logged in before proceeding; if not, redirects to the login page and displays an error message
+     * Checks if a user is logged in before proceeding; if not, redirects to the login page and displays an error message.
+     * Uses the getCourses service method to retrieve the list.
+     * @see CourseService#getCourses()
      * @param model The target model to attach the list of courses to
      * @param session The HTTP session, where information about the current user is stored
      * @param redirectAttributes Used to attach an error message to the redirect
@@ -56,10 +58,11 @@ public class CourseController {
      * If the search box is empty, the default behavior is to show the entire list.
      * Displays a status message if a search produces no results.
      * Uses the searchCourses service method to retrieve matches.
-     * @param courseNum The target course number, as a search parameter
+     * @param courseNum The target course number as an integer, used as a search parameter
      * @param model The target model for attachment of results
      * @param session The HTTP session, used for storing user information
-     * @return A redirect to the course list, with either the results or  a status message attached
+     * @return A redirect to the course list, with either the results or a status message attached
+     * @author Enterprise App Development Final Project Group
      */
     // search all the courses based on course number (i.e. IT4045C)
     @GetMapping("/search")
@@ -80,6 +83,16 @@ public class CourseController {
         return "courses/list";
     }
 
+    /**
+     * Retrieves detailed information about a specific course, identified by its ID.
+     * Uses the getCourseById service method to retrieve the course information.
+     * Also retrieves the full list of courses for persistence.
+     * @see CourseService#getCourseById(Integer)
+     * @param id The target course's ID number as an integer, stored as a path variable
+     * @param model The target model for the retrieved information
+     * @param session The HTTP session, used to store user information
+     * @return The course list page, with the retrieved information attached as an attribute
+     */
     // returns the course details to the page
     @GetMapping("/{id}")
     public String getCourseDetails(@PathVariable Integer id, Model model, HttpServletRequest session) {
@@ -94,6 +107,17 @@ public class CourseController {
         return "courses/list";
     }
 
+    /**
+     * An administrator-only method for creating a new course record for the database.
+     * Uses the createCourse service method to add the new course.
+     * Catches a generic exception and returns an error message if this occurs.
+     * @param course The Course entity to be submitted to the database.
+     * @param redirectAttributes Used to attach error messages to the redirect.
+     * @param session Http session that stores user information for validation.
+     * @return A redirect to the user profile page, with an error message if an exception occurs.
+     * @see CourseService#createCourse(Course)
+     * @author Enterprise App Development Final Project Group
+     */
     @PostMapping
     public String createCourse(@ModelAttribute Course course, RedirectAttributes redirectAttributes, HttpServletRequest session) {
         try {
@@ -106,12 +130,33 @@ public class CourseController {
         return "redirect:/users/profile";
     }
 
+    /**
+     * An administrator-only method for deleting a course record from the database.
+     * Uses the deleteCourse service method to remove the course.
+     * @param id The ID number of the target course as an integer, provided as a path variable.
+     * @param redirectAttributes Used to attach messages to the redirect.
+     * @param session The HTTP session, which stores user information for validation.
+     * @return A redirect to the user profile page.
+     * @see CourseService#deleteCourse(Integer)
+     * @author Enterprise App Development Final Project Group
+     */
     @PostMapping("/delete/{id}")
     public String deleteCourse(@PathVariable Integer id, RedirectAttributes redirectAttributes, HttpServletRequest session) {
         courseService.deleteCourse(id);
         return "redirect:/users/profile";
     }
 
+    /**
+     * Applies a user-submitted numerical rating to a specific course, updating its score.
+     * Uses the calculateRating service method to update the course rating.
+     *
+     * @param rating The rating from the user as an integer, provided as a request parameter.
+     * @param id The ID number of the target course as an integer, provided as a path variable.
+     * @param session The HTTP session, which stores user information.
+     * @return A redirect to the course page, with an error message attached if an exception gets caught.
+     * @see CourseService#calculateRating(Integer, int)
+     * @author Enterprise App Development Final Project Group
+     */
     @PostMapping("/{id}/addrating")
     public String addRating(@RequestParam("rating") int rating, @PathVariable Integer id, HttpServletRequest session) {
         try {

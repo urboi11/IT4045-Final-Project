@@ -6,6 +6,12 @@ import com.it4045.finalproject.entities.UserComments;
 
 import java.util.List;
 
+/**
+ * A service interface defining methods for managing Course entities and related operations.
+ * @see Course
+ * @see com.it4045.finalproject.controllers.CourseController
+ * @author Enterprise Application Development Final Project Group
+ */
 public interface ICourseService {
  public Course createCourse(Course course);
 

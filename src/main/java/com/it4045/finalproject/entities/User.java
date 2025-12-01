@@ -9,6 +9,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * An entity class representing a User in the database.
+ * Users have a userid (Integer and primary key), a firstname (String), a lastname (String),
+ * an email (String), a password (String), a role (String), and a List of associated UserComments.
+ * Uses Lombok annotations for boilerplate code reduction.
+ * @author Enterprise Application Development Final Project Group
+ */
 @Entity
 @Table(name="users")
 @AllArgsConstructor

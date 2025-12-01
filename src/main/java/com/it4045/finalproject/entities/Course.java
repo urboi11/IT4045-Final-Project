@@ -9,6 +9,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * An entity class representing a Course in the database.
+ * Courses have a courseID (Integer and primary key), courseNumber (String), courseName (String),
+ * courseRating (double), university (String), description (String), rating_count (int), and a list of associated UserComments.
+ * Uses Lombok annotations for boilerplate code reduction.
+ * @author Enterprise Application Development Final Project Group
+ */
 @Entity
 @Table(name="courses")
 @AllArgsConstructor

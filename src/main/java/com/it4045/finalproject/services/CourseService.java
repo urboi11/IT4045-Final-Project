@@ -87,7 +87,7 @@ public class CourseService implements ICourseService{
      *
      * JavaDoc by Ethan Goudy
      *
-     * @param courseId the ID of the course to delete
+     * @param courseId the ID of the course to delete as an integer
      *
      * @author Enterprise App Development Final Project Group
      */
@@ -103,7 +103,7 @@ public class CourseService implements ICourseService{
      *
      * JavaDoc proposed by Gabby Herlocher and edited by Ethan Goudy
      *
-     * @param courseNum the course number to search for
+     * @param courseNum the course number to search for as an integer
      * @return list of courses matching the course number, empty list if none found
      */
     @Override
@@ -116,7 +116,7 @@ public class CourseService implements ICourseService{
      *
      * JavaDoc proposed by Gabby Herlocher and edited by Ethan Goudy
      *
-     * @return list of all courses
+     * @return a List of all courses
      *
      * @author Enterprise App Development Final Project Group
      */
@@ -130,7 +130,7 @@ public class CourseService implements ICourseService{
      *
      * JavaDoc proposed by Gabby Herlocher and edited by Ethan Goudy
      *
-     * @param id the course ID to look up
+     * @param id the course ID to look up as an integer
      * @return the course entity with the specified ID
      * @throws IllegalArgumentException if no course exists with the given ID
      * @author Enterprise App Development Final Project Group
@@ -145,9 +145,9 @@ public class CourseService implements ICourseService{
      *
      * JavaDoc proposed by Gabby Herlocher and edited by Ethan Goudy
      *
-     * @param comment the comment text to add
-     * @param user the user posting the comment
-     * @param course the course being commented on
+     * @param comment the comment text to add as a string
+     * @param user the user posting the comment as a User entity
+     * @param course the course being commented on as a Course entity
      *
      * @throws EmptyCommentException if the comment has no text
      *
@@ -169,7 +169,7 @@ public class CourseService implements ICourseService{
      *
      * JavaDoc proposed by Gabby Herlocher and edited by Ethan Goudy
      *
-     * @param courseId the ID of the course to rate
+     * @param courseId the ID of the course to rate as an integer
      * @param rating the rating value as a string (must be 1-5)
      * @throws IllegalArgumentException if the course is not found, rating format is invalid,
      *         or rating is outside the 1-5 range
