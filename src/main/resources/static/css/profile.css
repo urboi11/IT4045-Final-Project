@@ -3,9 +3,6 @@ body {
     background-color: #fdfdfd;
     margin: 0;
     padding: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 }
 
 .left-panel {
@@ -94,6 +91,6 @@ nav a {
 
 .mainpage {
     display: flex;
-    gap: 40px;
-    padding: 20px;
+    flex-direction: row;
+    justify-content: space-between;
 }
