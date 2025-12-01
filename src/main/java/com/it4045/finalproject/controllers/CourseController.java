@@ -27,6 +27,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CourseController {
     private final CourseService courseService;
+    private final UserService userService;
 
     // gets all courses and is the default list view
 
@@ -57,11 +58,12 @@ public class CourseController {
      * Uses the searchCourses service method to retrieve matches.
      * @param courseNum The target course number, as a search parameter
      * @param model The target model for attachment of results
+     * @param session The HTTP session, used for storing user information
      * @return A redirect to the course list, with either the results or  a status message attached
      */
     // search all the courses based on course number (i.e. IT4045C)
     @GetMapping("/search")
-    public String searchCourses(@RequestParam(required = false) String courseNum, Model model) {
+    public String searchCourses(@RequestParam(required = false) String courseNum, Model model, HttpServletRequest session) {
         
 
         // if the search box is empty, show all the courses
