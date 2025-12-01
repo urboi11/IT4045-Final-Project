@@ -117,3 +117,17 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #f9c9a9;
 }
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #ddd;
+    padding: 10px;
+}
+
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #000;
+}

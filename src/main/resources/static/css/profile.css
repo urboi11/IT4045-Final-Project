@@ -77,3 +77,17 @@ button i.glyphicon-trash {
     border-bottom: 1px solid #ddd;
     padding-bottom: 8px;
 }
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #ddd;
+    padding: 10px;
+}
+
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #000;
+}
