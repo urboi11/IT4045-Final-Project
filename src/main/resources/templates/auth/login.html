@@ -2,7 +2,11 @@
 <html>
     <head>
         <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+        <link rel="stylesheet" th:href="@{/css/login.css}">
+
+        <title>RateMyCourse</title>
         <title>Login Page</title>
+        <h1>RateMyCourse</h1>
     </head>
     <div th:if="${SignUpSuccess}">
         <span th:text="${SignUpSuccess}"></span>
