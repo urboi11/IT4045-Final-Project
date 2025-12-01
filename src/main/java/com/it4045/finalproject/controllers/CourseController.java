@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 /**
  * Controller for handling course-related interactions, such as listing posted courses, searching for courses,
  * adding ratings, and creating or deleting courses as an administrator.
- * Uses service methods from CourseService  to interact with the database.
+ * Uses service methods from CourseService to interact with the database.
  * @see CourseService
  * @author Enterprise App Development Final Project Group
  */
@@ -29,6 +29,16 @@ public class CourseController {
     private final CourseService courseService;
 
     // gets all courses and is the default list view
+
+    /**
+     * Retrieves a list of all currently posted courses to be listed on the page.
+     * Checks if a user is logged in before proceeding; if not, redirects to the login page and displays an error message
+     * @param model The target model to attach the list of courses to
+     * @param session The HTTP session, where information about the current user is stored
+     * @param redirectAttributes Used to attach an error message to the redirect
+     * @return A redirect to the course list (if a user is logged in) or the login page (if not)
+     * @author Enterprise App Development Final Project Group
+     */
     @GetMapping
     public String getAllCourses(Model model, HttpServletRequest session, RedirectAttributes redirectAttributes) {
         if(session.getSession().getAttribute("CurrentUser") == null) {
@@ -40,9 +50,18 @@ public class CourseController {
         return "courses/list";
     }
 
+    /**
+     * Searches for courses based on a provided course number.
+     * If the search box is empty, the default behavior is to show the entire list.
+     * Displays a status message if a search produces no results.
+     * Uses the searchCourses service method to retrieve matches.
+     * @param courseNum The target course number, as a search parameter
+     * @param model The target model for attachment of results
+     * @return A redirect to the course list, with either the results or  a status message attached
+     */
     // search all the courses based on course number (i.e. IT4045C)
     @GetMapping("/search")
-    public String searchCourses(@RequestParam(required = false) String courseNum, Model model, HttpServletRequest session) {
+    public String searchCourses(@RequestParam(required = false) String courseNum, Model model) {
         
 
         // if the search box is empty, show all the courses
