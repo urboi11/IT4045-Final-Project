@@ -4,9 +4,16 @@
         <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
         <title>Profile Page</title>
         <link rel="stylesheet" th:href="@{/css/profile.css}">
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
      </head>
      <body>
+     <nav>
+         <ul style="list-style: none; display: flex; gap: 20px; padding: 10px; background-color: #f0f0f0;">
+             <li><a th:href="@{/courses/list}" style="text-decoration: none;">Courses</a></li>
+             <li><a th:href="@{/users/profile}" style="text-decoration: none;">Profile</a></li>
+
+         </ul>
+     </nav>
      <div class="left-panel">
 
      <h1 th:text="${isAdmin ? 'Admin Profile' : 'Profile'}"></h1>
