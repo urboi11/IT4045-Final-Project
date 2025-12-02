@@ -8,9 +8,9 @@
 <body>
 <nav>
     <ul style="list-style: none; display: flex; gap: 20px; padding: 10px; background-color: #f0f0f0;">
+
         <li><a th:href="@{/courses}" style="text-decoration: none;">Courses</a></li>
         <li><a th:href="@{/users/profile}" style="text-decoration: none;">Profile</a></li>
-
     </ul>
 </nav>
 
@@ -22,50 +22,52 @@
         <button type="submit">Search</button>
     </form>
 
-    <p th:if="${message}" th:text="${message}" style="color:gray;"></p>
-
     <hr>
-
-    <div class="course-list">
-        <h3>Course Results</h3>
-        <ul>
-            <li th:each="course : ${courses}">
-                <a th:href="@{'/courses/' + ${course.courseId}}"
-                   th:text="${course.courseNumber} + ' - ' + ${course.courseName}"></a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="course-details">
-        <div th:if="${course != null}">
-            <h3 th:text="${course.courseNumber} + ' - ' + ${course.courseName}"></h3>
-            <p th:text="'Rating: ' + ${course.courseRating}"></p>
-            <form th:action="@{'/courses/' + ${course.courseId} + '/addrating'}" method="POST">
-                <fieldset>
-                    <input name="rating" type="radio" id="1star" value="1"/>
-                    <input name="rating" type="radio" id="2star" value="2"/>
-                    <input name="rating" type="radio" id="3star" value="3"/>
-                    <input name="rating" type="radio" id="4star" value="4"/>
-                    <input name="rating" type="radio" id="5star" value="5"/>
-                </fieldset>
-                <button type="submit">Submit Rating</button>
-            </form>
-            <p th:text="${course.description}"></p>
-            <h4>Course Comments</h4>
-            <div th:if="${CommentErrorMessage}" class="alert alert-danger" role="alert">
-                <p th:text="${CommentErrorMessage}"></p>
-            </div>
-            <form th:action="@{'/comments/' + ${course.courseId} + '/addcomment'}" method="post">
-                <textarea id="commentInput" name="comment" placeholder="Enter your comment"></textarea>
-                <button type="submit">Post Comment</button>
-            </form>
+    <div class="outer-div">
+        <div class="course-list">
+            <h3>Course Results</h3>
             <ul>
-                <li th:each="comment : ${course.userComments}">
-                    <p th:text="${comment.comment}"></p>
-
+                <li th:each="course : ${courses}">
+                    <a th:href="@{'/courses/' + ${course.courseId}}"
+                       th:text="${course.courseNumber} + ' - ' + ${course.courseName}"></a>
                 </li>
             </ul>
+        </div>
 
+        <div class="course-details">
+            <p th:if="${message}" th:text="${message}" style="color:gray;"></p>
+            <div th:if="${course != null}">
+                <h3 th:text="${course.courseNumber} + ' - ' + ${course.courseName}"></h3>
+                <div class="rating-outer">
+                    <p th:text="'Rating: ' + ${course.courseRating}"></p>
+                    <form th:action="@{'/courses/' + ${course.courseId} + '/addrating'}" method="POST">
+                        <fieldset>
+                            <input name="rating" type="radio" id="1star" value="1"/>
+                            <input name="rating" type="radio" id="2star" value="2"/>
+                            <input name="rating" type="radio" id="3star" value="3"/>
+                            <input name="rating" type="radio" id="4star" value="4"/>
+                            <input name="rating" type="radio" id="5star" value="5"/>
+                        </fieldset>
+                        <button type="submit">Submit Rating</button>
+                    </form>
+                </div>
+                <p th:text="${course.description}"></p>
+                <h4>Course Comments</h4>
+                <div th:if="${CommentErrorMessage}" class="alert alert-danger" role="alert">
+                    <p th:text="${CommentErrorMessage}"></p>
+                </div>
+                <form th:action="@{'/comments/' + ${course.courseId} + '/addcomment'}" method="post">
+                    <textarea id="commentInput" name="comment" placeholder="Enter your comment"></textarea>
+                    <button type="submit">Post Comment</button>
+                </form>
+                <ul>
+                    <li th:each="comment : ${course.userComments}">
+                        <p th:text="${comment.comment}"></p>
+
+                    </li>
+                </ul>
+
+            </div>
         </div>
     </div>
 

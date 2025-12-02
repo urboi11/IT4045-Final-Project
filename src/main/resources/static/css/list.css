@@ -5,6 +5,26 @@ body {
     background-color: #f9f9f9;
 }
 
+.outer-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.rating-outer form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rating-outer fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 5px;
+}
+
 header h1 {
     text-align: center;
     font-size: 2.5em;
@@ -119,8 +139,8 @@ button[type="submit"]:hover {
 }
 
 nav {
-    display: flex;
-    justify-content: center;
+    /*display: flex;
+    justify-content: space-between;*/
     background-color: #ddd;
     padding: 10px;
 }
