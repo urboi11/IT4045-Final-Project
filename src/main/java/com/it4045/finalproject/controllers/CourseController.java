@@ -28,9 +28,6 @@ import lombok.AllArgsConstructor;
 public class CourseController {
     private final CourseService courseService;
     private final UserService userService;
-
-    // gets all courses and is the default list view
-
     /**
      * Retrieves a list of all currently posted courses to be listed on the page.
      * Checks if a user is logged in before proceeding; if not, redirects to the login page and displays an error message.
@@ -64,18 +61,18 @@ public class CourseController {
      * @return A redirect to the course list, with either the results or a status message attached
      * @author Enterprise App Development Final Project Group
      */
-    // search all the courses based on course number (i.e. IT4045C)
     @GetMapping("/search")
-    public String searchCourses(@RequestParam(required = false) String courseNum, Model model, HttpServletRequest session) {
-        
+    public String searchCourses(@RequestParam(required = false) String courseNum, Model model, HttpServletRequest session, RedirectAttributes redirectAttributes) {
+        if(session.getSession().getAttribute("CurrentUser") == null) {
+            redirectAttributes.addFlashAttribute("LoginError", "You need to be logged in to view that page.");
+            return "redirect:/auth/login";
+        }
 
-        // if the search box is empty, show all the courses
         if (courseNum == null || courseNum.trim().isEmpty()) {
             return "redirect:/courses";
         }
 
         List<Course> courses = courseService.searchCourses(courseNum);
-        // if no courses with the number found, return the error message
         if (courses.isEmpty())
             model.addAttribute("message", "Hmm, we couldn't find any course with that ID.");
 
@@ -93,14 +90,16 @@ public class CourseController {
      * @param session The HTTP session, used to store user information
      * @return The course list page, with the retrieved information attached as an attribute
      */
-    // returns the course details to the page
     @GetMapping("/{id}")
-    public String getCourseDetails(@PathVariable Integer id, Model model, HttpServletRequest session) {
-        
+    public String getCourseDetails(@PathVariable Integer id, Model model, HttpServletRequest session, RedirectAttributes redirectAttributes) {
+        if(session.getSession().getAttribute("CurrentUser") == null) {
+            redirectAttributes.addFlashAttribute("LoginError", "You need to be logged in to view that page.");
+            return "redirect:/auth/login";
+        }
+
         var course = courseService.getCourseById(id);
         model.addAttribute("course", course);
 
-        // to maintain the list of courses on the side
         List<Course> courses = courseService.getCourses();
         model.addAttribute("courses", courses);
 
